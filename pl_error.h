@@ -15,6 +15,7 @@
 
 #define PL_ERROR_STACKOVERFLOW 1
 #define PL_ERROR_INDEX_OUT_OF_BOUND 2
+#define PL_ERROR_MALLOC_FAIL 3
 
 /*-----------------------------------------------------------------------------
  |  Error report
