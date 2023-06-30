@@ -17,7 +17,7 @@
 
 typedef struct pl_optional_void
 {
- const pl_error error;
+    const pl_error error;
 } pl_optional_void;
 
 typedef struct pl_optional_char
