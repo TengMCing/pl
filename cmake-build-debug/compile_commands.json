@@ -1,0 +1,27 @@
+[
+{
+  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/main.c.o -c /Users/patrickli/Desktop/cproject/pl/main.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/main.c"
+},
+{
+  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_misc.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_misc.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_misc.c"
+},
+{
+  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl.c.o -c /Users/patrickli/Desktop/cproject/pl/pl.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl.c"
+},
+{
+  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_error.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_error.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_error.c"
+},
+{
+  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_bt.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_bt.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_bt.c"
+}
+]

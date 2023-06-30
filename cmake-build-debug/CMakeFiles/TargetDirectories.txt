@@ -1,0 +1,3 @@
+/Users/patrickli/Desktop/cproject/pl/cmake-build-debug/CMakeFiles/pl.dir
+/Users/patrickli/Desktop/cproject/pl/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/patrickli/Desktop/cproject/pl/cmake-build-debug/CMakeFiles/rebuild_cache.dir
