@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/pl.dir/pl_bt.c.o.d"
   "CMakeFiles/pl.dir/pl_error.c.o"
   "CMakeFiles/pl.dir/pl_error.c.o.d"
+  "CMakeFiles/pl.dir/pl_mem.c.o"
+  "CMakeFiles/pl.dir/pl_mem.c.o.d"
   "CMakeFiles/pl.dir/pl_misc.c.o"
   "CMakeFiles/pl.dir/pl_misc.c.o.d"
   "pl"

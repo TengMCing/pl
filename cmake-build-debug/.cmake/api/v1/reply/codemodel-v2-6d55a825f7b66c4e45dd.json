@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.23"
@@ -19,7 +19,7 @@
 					]
 				}
 			],
-			"name" : "Release",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "pl::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-pl-Release-9a5c506913dfea8aa0f1.json",
+					"jsonFile" : "target-pl-Debug-63942aab6e84e890f396.json",
 					"name" : "pl",
 					"projectIndex" : 0
 				}
@@ -49,7 +49,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
+		"build" : "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
 		"source" : "/Users/patrickli/Desktop/cproject/pl"
 	},
 	"version" : 

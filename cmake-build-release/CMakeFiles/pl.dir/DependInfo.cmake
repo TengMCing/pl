@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/patrickli/Desktop/cproject/pl/pl.c" "CMakeFiles/pl.dir/pl.c.o" "gcc" "CMakeFiles/pl.dir/pl.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_bt.c" "CMakeFiles/pl.dir/pl_bt.c.o" "gcc" "CMakeFiles/pl.dir/pl_bt.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_error.c" "CMakeFiles/pl.dir/pl_error.c.o" "gcc" "CMakeFiles/pl.dir/pl_error.c.o.d"
+  "/Users/patrickli/Desktop/cproject/pl/pl_mem.c" "CMakeFiles/pl.dir/pl_mem.c.o" "gcc" "CMakeFiles/pl.dir/pl_mem.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_misc.c" "CMakeFiles/pl.dir/pl_misc.c.o" "gcc" "CMakeFiles/pl.dir/pl_misc.c.o.d"
   )
 

@@ -228,6 +228,30 @@ pl_error.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_error.c.s
 .PHONY : pl_error.c.s
 
+pl_mem.o: pl_mem.c.o
+.PHONY : pl_mem.o
+
+# target to build an object file
+pl_mem.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_mem.c.o
+.PHONY : pl_mem.c.o
+
+pl_mem.i: pl_mem.c.i
+.PHONY : pl_mem.i
+
+# target to preprocess a source file
+pl_mem.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_mem.c.i
+.PHONY : pl_mem.c.i
+
+pl_mem.s: pl_mem.c.s
+.PHONY : pl_mem.s
+
+# target to generate assembly for a file
+pl_mem.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_mem.c.s
+.PHONY : pl_mem.c.s
+
 pl_misc.o: pl_misc.c.o
 .PHONY : pl_misc.o
 
@@ -273,6 +297,9 @@ help:
 	@echo "... pl_error.o"
 	@echo "... pl_error.i"
 	@echo "... pl_error.s"
+	@echo "... pl_mem.o"
+	@echo "... pl_mem.i"
+	@echo "... pl_mem.s"
 	@echo "... pl_misc.o"
 	@echo "... pl_misc.i"
 	@echo "... pl_misc.s"
