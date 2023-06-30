@@ -12,7 +12,6 @@
  |  Global backtrace stack
  ----------------------------------------------------------------------------*/
 
-#define PL_BT_MAX_ALLOWED_FRAME_NUM 256
 #define PL_BT_EXTRA_FRAME_NUM 8
 
 typedef struct bt
