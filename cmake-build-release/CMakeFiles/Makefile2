@@ -84,12 +84,12 @@ clean: CMakeFiles/pl.dir/clean
 CMakeFiles/pl.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target pl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target pl"
 .PHONY : CMakeFiles/pl.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/pl.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/pl.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles 0
 .PHONY : CMakeFiles/pl.dir/rule

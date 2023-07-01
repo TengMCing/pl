@@ -204,6 +204,30 @@ pl_bt.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_bt.c.s
 .PHONY : pl_bt.c.s
 
+pl_class.o: pl_class.c.o
+.PHONY : pl_class.o
+
+# target to build an object file
+pl_class.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_class.c.o
+.PHONY : pl_class.c.o
+
+pl_class.i: pl_class.c.i
+.PHONY : pl_class.i
+
+# target to preprocess a source file
+pl_class.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_class.c.i
+.PHONY : pl_class.c.i
+
+pl_class.s: pl_class.c.s
+.PHONY : pl_class.s
+
+# target to generate assembly for a file
+pl_class.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_class.c.s
+.PHONY : pl_class.c.s
+
 pl_error.o: pl_error.c.o
 .PHONY : pl_error.o
 
@@ -276,6 +300,30 @@ pl_misc.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_misc.c.s
 .PHONY : pl_misc.c.s
 
+pl_vector.o: pl_vector.c.o
+.PHONY : pl_vector.o
+
+# target to build an object file
+pl_vector.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_vector.c.o
+.PHONY : pl_vector.c.o
+
+pl_vector.i: pl_vector.c.i
+.PHONY : pl_vector.i
+
+# target to preprocess a source file
+pl_vector.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_vector.c.i
+.PHONY : pl_vector.c.i
+
+pl_vector.s: pl_vector.c.s
+.PHONY : pl_vector.s
+
+# target to generate assembly for a file
+pl_vector.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_vector.c.s
+.PHONY : pl_vector.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -294,6 +342,9 @@ help:
 	@echo "... pl_bt.o"
 	@echo "... pl_bt.i"
 	@echo "... pl_bt.s"
+	@echo "... pl_class.o"
+	@echo "... pl_class.i"
+	@echo "... pl_class.s"
 	@echo "... pl_error.o"
 	@echo "... pl_error.i"
 	@echo "... pl_error.s"
@@ -303,6 +354,9 @@ help:
 	@echo "... pl_misc.o"
 	@echo "... pl_misc.i"
 	@echo "... pl_misc.s"
+	@echo "... pl_vector.o"
+	@echo "... pl_vector.i"
+	@echo "... pl_vector.s"
 .PHONY : help
 
 

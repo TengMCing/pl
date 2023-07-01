@@ -28,5 +28,15 @@
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
   "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_mem.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_mem.c",
   "file": "/Users/patrickli/Desktop/cproject/pl/pl_mem.c"
+},
+{
+  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_vector.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_vector.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_vector.c"
+},
+{
+  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_class.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_class.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_class.c"
 }
 ]
