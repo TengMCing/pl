@@ -5,16 +5,27 @@
 #include "pl_mem.h"
 #include "pl_error.h"
 
+/*-----------------------------------------------------------------------------
+ |  New
+ ----------------------------------------------------------------------------*/
+
 static pl_optional_void_p new(const size_t size)
 {
     void *tmp_object = malloc(size);
-    pl_error_expect(tmp_object != NULL, pl_optional_void_p, PL_ERROR_MALLOC_FAIL, "Malloc fails!");
+    pl_error_assert_and_return(tmp_object != NULL,
+                               pl_optional_void_p,
+                               PL_ERROR_MALLOC_FAIL,
+                               "Malloc fails!");
     return (pl_optional_void_p){.value = tmp_object};
 }
 
-static pl_optional_void_p resize(void *const object, const size_t size)
+/*-----------------------------------------------------------------------------
+ |  Resize
+ ----------------------------------------------------------------------------*/
+
+static pl_optional_void_p resize(void *const address, const size_t size)
 {
-    void *tmp_object = realloc(object, size);
+    void *tmp_object = realloc(address, size);
     if (tmp_object == NULL)
     {
         const pl_error_ns error_ns = pl_error_get_ns();
@@ -23,15 +34,19 @@ static pl_optional_void_p resize(void *const object, const size_t size)
                                                      __FILE_NAME__,
                                                      __LINE__,
                                                      "Realloc fails!");
-        return (pl_optional_void_p){.value = object,
+        return (pl_optional_void_p){.value = address,
                                     .error = this_error};
     }
     return (pl_optional_void_p){.value = tmp_object};
 }
 
-static void delete(void *const object)
+/*-----------------------------------------------------------------------------
+ |  Delete
+ ----------------------------------------------------------------------------*/
+
+static void delete(void *const address)
 {
-    free(object);
+    free(address);
 }
 
 /*-----------------------------------------------------------------------------
