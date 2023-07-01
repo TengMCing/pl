@@ -47,11 +47,11 @@ static pl_optional_void push(const pl_bt_frame frame)
     global_bt.line[global_bt.frame_count]          = frame.line;
     global_bt.frame_count++;
 
-    pl_error_expect(global_bt.frame_count < PL_BT_MAX_ALLOWED_FRAME_NUM,
-                    pl_optional_void,
-                    PL_ERROR_STACKOVERFLOW,
-                    "Stackoverflow! Depth > [%d].",
-                    PL_BT_MAX_ALLOWED_FRAME_NUM);
+    pl_error_assert_and_return(global_bt.frame_count < PL_BT_MAX_ALLOWED_FRAME_NUM,
+                               pl_optional_void,
+                               PL_ERROR_STACKOVERFLOW,
+                               "Stackoverflow! Depth > [%d].",
+                               PL_BT_MAX_ALLOWED_FRAME_NUM);
     return (pl_optional_void){0};
 }
 
@@ -70,12 +70,12 @@ static int get_depth(void)
 
 static pl_bt_optional_frame get_frame(const int depth)
 {
-    pl_error_expect(depth >= 0 && depth < global_bt.frame_count,
-                    pl_bt_optional_frame,
-                    PL_ERROR_INDEX_OUT_OF_BOUND,
-                    "Index [%d] out of bound [0, %d)!",
-                    depth,
-                    global_bt.frame_count);
+    pl_error_assert_and_return(depth >= 0 && depth < global_bt.frame_count,
+                               pl_bt_optional_frame,
+                               PL_ERROR_INDEX_OUT_OF_BOUND,
+                               "Index [%d] out of bound [0, %d)!",
+                               depth,
+                               global_bt.frame_count);
 
     pl_bt_frame tmp_frame = {.file_name     = global_bt.file_name[depth],
                              .function_name = global_bt.function_name[depth],
