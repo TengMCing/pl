@@ -35,7 +35,7 @@ typedef struct pl_error
 
 
 /*-----------------------------------------------------------------------------
- |  Expect
+ |  Assert
  ----------------------------------------------------------------------------*/
 
 /// Expect a condition to be true.
@@ -46,23 +46,23 @@ typedef struct pl_error
 /// @param error_code (const int). The error ID.
 /// @param format (const char *). The format of the error message.
 /// @param ... Additional arguments used for snprintf.
-#define pl_error_expect(condition, return_type, error_code, format, ...)   \
-    do {                                                                   \
-        if (!(condition))                                                  \
-        {                                                                  \
-            const pl_error_ns error_ns = pl_error_get_ns();                \
-            return (return_type){.error = error_ns.create(error_code,      \
-                                                          __func__,        \
-                                                          __FILE__,        \
-                                                          __LINE__,        \
-                                                          format,          \
-                                                          ##__VA_ARGS__)}; \
-        }                                                                  \
+#define pl_error_assert_and_return(condition, return_type, error_code, format, ...) \
+    do {                                                                            \
+        if (!(condition))                                                           \
+        {                                                                           \
+            const pl_error_ns error_ns = pl_error_get_ns();                         \
+            return (return_type){.error = error_ns.create(error_code,               \
+                                                          __func__,                 \
+                                                          __FILE__,                 \
+                                                          __LINE__,                 \
+                                                          format,                   \
+                                                          ##__VA_ARGS__)};          \
+        }                                                                           \
     } while (0)
 
 
 /*-----------------------------------------------------------------------------
- |  Expect and exit
+ |  Assert and exit
  ----------------------------------------------------------------------------*/
 
 /// Expect a condition to be true.
@@ -70,7 +70,7 @@ typedef struct pl_error
 /// @param error_code (const int). The error ID.
 /// @param format (const char *). The format of the error message.
 /// @param ... Additional arguments used for snprintf.
-#define pl_error_expect_and_exit(condition, error_code, format, ...)     \
+#define pl_error_assert_and_exit(condition, error_code, format, ...)     \
     do {                                                                 \
         if (!(condition))                                                \
         {                                                                \
