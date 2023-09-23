@@ -78,7 +78,8 @@
  ----------------------------------------------------------------------------*/
 
 /// Paste two tokens together.
-#define pl_misc_paste_arg(a, b) a##b
+#define pl_misc_concat(a, b) a##b
+#define pl_misc_paste_arg(a, b) pl_misc_concat(a, b)
 
 /*-----------------------------------------------------------------------------
  |  Compile time assert
@@ -89,6 +90,33 @@
 /// @param file (string literal) The file name.
 #define pl_misc_compile_time_assert(condition, file) pl_misc_compile_time_assert_line(condition, __LINE__, file)
 #define pl_misc_compile_time_assert_line(condition, line, file) typedef char pl_misc_paste_arg(assertion_failed_##file##_, line)[2 * !!(condition) -1];
+
+/*-----------------------------------------------------------------------------
+ |  With
+ ----------------------------------------------------------------------------*/
+
+#define pl_misc_with_i_name(line) pl_misc_paste_arg(_with_i, line)
+#define pl_misc_with_ip_name(line) pl_misc_paste_arg(_with_ip, line)
+
+// From STC (https://github.com/stclib/STC/blob/master/include/stc/algo/raii.h)
+#define pl_misc_with(...) pl_misc_paste_arg(pl_misc_concat(pl_misc_with, _), pl_misc_count_arg(__VA_ARGS__))(__VA_ARGS__)
+#define pl_misc_with_2(declare, cleanup) for (declare, *pl_misc_with_i_name(__LINE__), **pl_misc_with_ip_name(__LINE__) = &pl_misc_with_i_name(__LINE__); pl_misc_with_ip_name(__LINE__); pl_misc_with_ip_name(__LINE__) = 0, cleanup)
+#define pl_misc_with_3(declare, early_stopping, cleanup) for (declare, *pl_misc_with_i_name(__LINE__), **pl_misc_with_ip_name(__LINE__) = &pl_misc_with_i_name(__LINE__); pl_misc_with_ip_name(__LINE__) && (early_stopping); pl_misc_with_ip_name(__LINE__) = 0, cleanup)
+
+/*-----------------------------------------------------------------------------
+ |  Defer
+ ----------------------------------------------------------------------------*/
+
+#define pl_misc_defer_i_name(line) pl_misc_paste_arg(_defer_i, line)
+
+// From STC (https://github.com/stclib/STC/blob/master/include/stc/algo/raii.h)
+#define pl_misc_defer(...) for (int pl_misc_defer_i_name(__LINE__) = 1; pl_misc_defer_i_name(__LINE__); pl_misc_defer_i_name(__LINE__) = 0, __VA_ARGS__)
+
+/*-----------------------------------------------------------------------------
+ |  Expand
+ ----------------------------------------------------------------------------*/
+
+#define pl_misc_expand(...) __VA_ARGS__
 
 /*-----------------------------------------------------------------------------
  |  Misc namespace
@@ -124,6 +152,11 @@ typedef struct pl_misc_ns
     /// @param b (const void *). Another address.
     /// @return 1 if a > b, -1 if a \< b and 0 if a == b.
     int (*const compare_address)(const void *a, const void *b);
+
+#ifdef PL_TEST
+    void (*const test)(void);
+#endif//PL_TEST
+
 } pl_misc_ns;
 
 /// Get misc namespace.
