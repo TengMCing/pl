@@ -10,12 +10,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/patrickli/Desktop/cproject/pl/main.c" "CMakeFiles/pl.dir/main.c.o" "gcc" "CMakeFiles/pl.dir/main.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl.c" "CMakeFiles/pl.dir/pl.c.o" "gcc" "CMakeFiles/pl.dir/pl.c.o.d"
-  "/Users/patrickli/Desktop/cproject/pl/pl_bt.c" "CMakeFiles/pl.dir/pl_bt.c.o" "gcc" "CMakeFiles/pl.dir/pl_bt.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_class.c" "CMakeFiles/pl.dir/pl_class.c.o" "gcc" "CMakeFiles/pl.dir/pl_class.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_error.c" "CMakeFiles/pl.dir/pl_error.c.o" "gcc" "CMakeFiles/pl.dir/pl_error.c.o.d"
-  "/Users/patrickli/Desktop/cproject/pl/pl_mem.c" "CMakeFiles/pl.dir/pl_mem.c.o" "gcc" "CMakeFiles/pl.dir/pl_mem.c.o.d"
+  "/Users/patrickli/Desktop/cproject/pl/pl_gc.c" "CMakeFiles/pl.dir/pl_gc.c.o" "gcc" "CMakeFiles/pl.dir/pl_gc.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_misc.c" "CMakeFiles/pl.dir/pl_misc.c.o" "gcc" "CMakeFiles/pl.dir/pl_misc.c.o.d"
-  "/Users/patrickli/Desktop/cproject/pl/pl_vector.c" "CMakeFiles/pl.dir/pl_vector.c.o" "gcc" "CMakeFiles/pl.dir/pl_vector.c.o.d"
+  "/Users/patrickli/Desktop/cproject/pl/pl_object.c" "CMakeFiles/pl.dir/pl_object.c.o" "gcc" "CMakeFiles/pl.dir/pl_object.c.o.d"
+  "/Users/patrickli/Desktop/cproject/pl/pl_var.c" "CMakeFiles/pl.dir/pl_var.c.o" "gcc" "CMakeFiles/pl.dir/pl_var.c.o.d"
   )
 
 # Targets to which this target links.

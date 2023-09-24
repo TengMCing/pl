@@ -128,52 +128,24 @@ CMakeFiles/pl.dir/pl_error.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_error.c.s"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_error.c -o CMakeFiles/pl.dir/pl_error.c.s
 
-CMakeFiles/pl.dir/pl_bt.c.o: CMakeFiles/pl.dir/flags.make
-CMakeFiles/pl.dir/pl_bt.c.o: ../pl_bt.c
-CMakeFiles/pl.dir/pl_bt.c.o: CMakeFiles/pl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/pl.dir/pl_bt.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/pl.dir/pl_bt.c.o -MF CMakeFiles/pl.dir/pl_bt.c.o.d -o CMakeFiles/pl.dir/pl_bt.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_bt.c
+CMakeFiles/pl.dir/pl_object.c.o: CMakeFiles/pl.dir/flags.make
+CMakeFiles/pl.dir/pl_object.c.o: ../pl_object.c
+CMakeFiles/pl.dir/pl_object.c.o: CMakeFiles/pl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/pl.dir/pl_object.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/pl.dir/pl_object.c.o -MF CMakeFiles/pl.dir/pl_object.c.o.d -o CMakeFiles/pl.dir/pl_object.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_object.c
 
-CMakeFiles/pl.dir/pl_bt.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pl.dir/pl_bt.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/patrickli/Desktop/cproject/pl/pl_bt.c > CMakeFiles/pl.dir/pl_bt.c.i
+CMakeFiles/pl.dir/pl_object.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pl.dir/pl_object.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/patrickli/Desktop/cproject/pl/pl_object.c > CMakeFiles/pl.dir/pl_object.c.i
 
-CMakeFiles/pl.dir/pl_bt.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_bt.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_bt.c -o CMakeFiles/pl.dir/pl_bt.c.s
-
-CMakeFiles/pl.dir/pl_mem.c.o: CMakeFiles/pl.dir/flags.make
-CMakeFiles/pl.dir/pl_mem.c.o: ../pl_mem.c
-CMakeFiles/pl.dir/pl_mem.c.o: CMakeFiles/pl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/pl.dir/pl_mem.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/pl.dir/pl_mem.c.o -MF CMakeFiles/pl.dir/pl_mem.c.o.d -o CMakeFiles/pl.dir/pl_mem.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_mem.c
-
-CMakeFiles/pl.dir/pl_mem.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pl.dir/pl_mem.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/patrickli/Desktop/cproject/pl/pl_mem.c > CMakeFiles/pl.dir/pl_mem.c.i
-
-CMakeFiles/pl.dir/pl_mem.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_mem.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_mem.c -o CMakeFiles/pl.dir/pl_mem.c.s
-
-CMakeFiles/pl.dir/pl_vector.c.o: CMakeFiles/pl.dir/flags.make
-CMakeFiles/pl.dir/pl_vector.c.o: ../pl_vector.c
-CMakeFiles/pl.dir/pl_vector.c.o: CMakeFiles/pl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/pl.dir/pl_vector.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/pl.dir/pl_vector.c.o -MF CMakeFiles/pl.dir/pl_vector.c.o.d -o CMakeFiles/pl.dir/pl_vector.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_vector.c
-
-CMakeFiles/pl.dir/pl_vector.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pl.dir/pl_vector.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/patrickli/Desktop/cproject/pl/pl_vector.c > CMakeFiles/pl.dir/pl_vector.c.i
-
-CMakeFiles/pl.dir/pl_vector.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_vector.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_vector.c -o CMakeFiles/pl.dir/pl_vector.c.s
+CMakeFiles/pl.dir/pl_object.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_object.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_object.c -o CMakeFiles/pl.dir/pl_object.c.s
 
 CMakeFiles/pl.dir/pl_class.c.o: CMakeFiles/pl.dir/flags.make
 CMakeFiles/pl.dir/pl_class.c.o: ../pl_class.c
 CMakeFiles/pl.dir/pl_class.c.o: CMakeFiles/pl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/pl.dir/pl_class.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/pl.dir/pl_class.c.o"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/pl.dir/pl_class.c.o -MF CMakeFiles/pl.dir/pl_class.c.o.d -o CMakeFiles/pl.dir/pl_class.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_class.c
 
 CMakeFiles/pl.dir/pl_class.c.i: cmake_force
@@ -184,16 +156,44 @@ CMakeFiles/pl.dir/pl_class.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_class.c.s"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_class.c -o CMakeFiles/pl.dir/pl_class.c.s
 
+CMakeFiles/pl.dir/pl_gc.c.o: CMakeFiles/pl.dir/flags.make
+CMakeFiles/pl.dir/pl_gc.c.o: ../pl_gc.c
+CMakeFiles/pl.dir/pl_gc.c.o: CMakeFiles/pl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/pl.dir/pl_gc.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/pl.dir/pl_gc.c.o -MF CMakeFiles/pl.dir/pl_gc.c.o.d -o CMakeFiles/pl.dir/pl_gc.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_gc.c
+
+CMakeFiles/pl.dir/pl_gc.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pl.dir/pl_gc.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/patrickli/Desktop/cproject/pl/pl_gc.c > CMakeFiles/pl.dir/pl_gc.c.i
+
+CMakeFiles/pl.dir/pl_gc.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_gc.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_gc.c -o CMakeFiles/pl.dir/pl_gc.c.s
+
+CMakeFiles/pl.dir/pl_var.c.o: CMakeFiles/pl.dir/flags.make
+CMakeFiles/pl.dir/pl_var.c.o: ../pl_var.c
+CMakeFiles/pl.dir/pl_var.c.o: CMakeFiles/pl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/pl.dir/pl_var.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/pl.dir/pl_var.c.o -MF CMakeFiles/pl.dir/pl_var.c.o.d -o CMakeFiles/pl.dir/pl_var.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_var.c
+
+CMakeFiles/pl.dir/pl_var.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pl.dir/pl_var.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/patrickli/Desktop/cproject/pl/pl_var.c > CMakeFiles/pl.dir/pl_var.c.i
+
+CMakeFiles/pl.dir/pl_var.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pl.dir/pl_var.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/patrickli/Desktop/cproject/pl/pl_var.c -o CMakeFiles/pl.dir/pl_var.c.s
+
 # Object files for target pl
 pl_OBJECTS = \
 "CMakeFiles/pl.dir/main.c.o" \
 "CMakeFiles/pl.dir/pl_misc.c.o" \
 "CMakeFiles/pl.dir/pl.c.o" \
 "CMakeFiles/pl.dir/pl_error.c.o" \
-"CMakeFiles/pl.dir/pl_bt.c.o" \
-"CMakeFiles/pl.dir/pl_mem.c.o" \
-"CMakeFiles/pl.dir/pl_vector.c.o" \
-"CMakeFiles/pl.dir/pl_class.c.o"
+"CMakeFiles/pl.dir/pl_object.c.o" \
+"CMakeFiles/pl.dir/pl_class.c.o" \
+"CMakeFiles/pl.dir/pl_gc.c.o" \
+"CMakeFiles/pl.dir/pl_var.c.o"
 
 # External object files for target pl
 pl_EXTERNAL_OBJECTS =
@@ -202,10 +202,10 @@ pl: CMakeFiles/pl.dir/main.c.o
 pl: CMakeFiles/pl.dir/pl_misc.c.o
 pl: CMakeFiles/pl.dir/pl.c.o
 pl: CMakeFiles/pl.dir/pl_error.c.o
-pl: CMakeFiles/pl.dir/pl_bt.c.o
-pl: CMakeFiles/pl.dir/pl_mem.c.o
-pl: CMakeFiles/pl.dir/pl_vector.c.o
+pl: CMakeFiles/pl.dir/pl_object.c.o
 pl: CMakeFiles/pl.dir/pl_class.c.o
+pl: CMakeFiles/pl.dir/pl_gc.c.o
+pl: CMakeFiles/pl.dir/pl_var.c.o
 pl: CMakeFiles/pl.dir/build.make
 pl: CMakeFiles/pl.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/patrickli/Desktop/cproject/pl/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable pl"

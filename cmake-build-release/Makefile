@@ -180,30 +180,6 @@ pl.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl.c.s
 .PHONY : pl.c.s
 
-pl_bt.o: pl_bt.c.o
-.PHONY : pl_bt.o
-
-# target to build an object file
-pl_bt.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_bt.c.o
-.PHONY : pl_bt.c.o
-
-pl_bt.i: pl_bt.c.i
-.PHONY : pl_bt.i
-
-# target to preprocess a source file
-pl_bt.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_bt.c.i
-.PHONY : pl_bt.c.i
-
-pl_bt.s: pl_bt.c.s
-.PHONY : pl_bt.s
-
-# target to generate assembly for a file
-pl_bt.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_bt.c.s
-.PHONY : pl_bt.c.s
-
 pl_class.o: pl_class.c.o
 .PHONY : pl_class.o
 
@@ -252,29 +228,29 @@ pl_error.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_error.c.s
 .PHONY : pl_error.c.s
 
-pl_mem.o: pl_mem.c.o
-.PHONY : pl_mem.o
+pl_gc.o: pl_gc.c.o
+.PHONY : pl_gc.o
 
 # target to build an object file
-pl_mem.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_mem.c.o
-.PHONY : pl_mem.c.o
+pl_gc.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_gc.c.o
+.PHONY : pl_gc.c.o
 
-pl_mem.i: pl_mem.c.i
-.PHONY : pl_mem.i
+pl_gc.i: pl_gc.c.i
+.PHONY : pl_gc.i
 
 # target to preprocess a source file
-pl_mem.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_mem.c.i
-.PHONY : pl_mem.c.i
+pl_gc.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_gc.c.i
+.PHONY : pl_gc.c.i
 
-pl_mem.s: pl_mem.c.s
-.PHONY : pl_mem.s
+pl_gc.s: pl_gc.c.s
+.PHONY : pl_gc.s
 
 # target to generate assembly for a file
-pl_mem.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_mem.c.s
-.PHONY : pl_mem.c.s
+pl_gc.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_gc.c.s
+.PHONY : pl_gc.c.s
 
 pl_misc.o: pl_misc.c.o
 .PHONY : pl_misc.o
@@ -300,29 +276,53 @@ pl_misc.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_misc.c.s
 .PHONY : pl_misc.c.s
 
-pl_vector.o: pl_vector.c.o
-.PHONY : pl_vector.o
+pl_object.o: pl_object.c.o
+.PHONY : pl_object.o
 
 # target to build an object file
-pl_vector.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_vector.c.o
-.PHONY : pl_vector.c.o
+pl_object.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_object.c.o
+.PHONY : pl_object.c.o
 
-pl_vector.i: pl_vector.c.i
-.PHONY : pl_vector.i
+pl_object.i: pl_object.c.i
+.PHONY : pl_object.i
 
 # target to preprocess a source file
-pl_vector.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_vector.c.i
-.PHONY : pl_vector.c.i
+pl_object.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_object.c.i
+.PHONY : pl_object.c.i
 
-pl_vector.s: pl_vector.c.s
-.PHONY : pl_vector.s
+pl_object.s: pl_object.c.s
+.PHONY : pl_object.s
 
 # target to generate assembly for a file
-pl_vector.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_vector.c.s
-.PHONY : pl_vector.c.s
+pl_object.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_object.c.s
+.PHONY : pl_object.c.s
+
+pl_var.o: pl_var.c.o
+.PHONY : pl_var.o
+
+# target to build an object file
+pl_var.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_var.c.o
+.PHONY : pl_var.c.o
+
+pl_var.i: pl_var.c.i
+.PHONY : pl_var.i
+
+# target to preprocess a source file
+pl_var.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_var.c.i
+.PHONY : pl_var.c.i
+
+pl_var.s: pl_var.c.s
+.PHONY : pl_var.s
+
+# target to generate assembly for a file
+pl_var.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pl.dir/build.make CMakeFiles/pl.dir/pl_var.c.s
+.PHONY : pl_var.c.s
 
 # Help Target
 help:
@@ -339,24 +339,24 @@ help:
 	@echo "... pl.o"
 	@echo "... pl.i"
 	@echo "... pl.s"
-	@echo "... pl_bt.o"
-	@echo "... pl_bt.i"
-	@echo "... pl_bt.s"
 	@echo "... pl_class.o"
 	@echo "... pl_class.i"
 	@echo "... pl_class.s"
 	@echo "... pl_error.o"
 	@echo "... pl_error.i"
 	@echo "... pl_error.s"
-	@echo "... pl_mem.o"
-	@echo "... pl_mem.i"
-	@echo "... pl_mem.s"
+	@echo "... pl_gc.o"
+	@echo "... pl_gc.i"
+	@echo "... pl_gc.s"
 	@echo "... pl_misc.o"
 	@echo "... pl_misc.i"
 	@echo "... pl_misc.s"
-	@echo "... pl_vector.o"
-	@echo "... pl_vector.i"
-	@echo "... pl_vector.s"
+	@echo "... pl_object.o"
+	@echo "... pl_object.i"
+	@echo "... pl_object.s"
+	@echo "... pl_var.o"
+	@echo "... pl_var.i"
+	@echo "... pl_var.s"
 .PHONY : help
 
 
