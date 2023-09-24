@@ -18,4 +18,6 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # -Wno-shadow: Some constructors provided in this library need to nest statement expression together.
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything")
 
-add_executable(pl main.c pl_misc.c pl_misc.h pl.c pl.h pl_error.c pl_error.h pl_optional.h pl_bt.c pl_bt.h pl_mem.c pl_mem.h pl_vector.c pl_vector.h pl_class.c pl_class.h)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPL_OBJECT_SHORTCUTS -DPL_TEST")
+
+add_executable(pl main.c pl_misc.c pl_misc.h pl.c pl.h pl_error.c pl_error.h pl_object.c pl_object.h pl_class.c pl_class.h pl_gc.c pl_gc.h pl_var.c pl_var.h pl_unittest.h)
