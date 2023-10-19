@@ -1,6 +1,9 @@
 //
 // Created by Patrick Li on 29/6/2023.
 //
+// Checked by Patrick Li on 10/19/2023
+//
+
 
 #ifndef PL_PL_ERROR_H
 #define PL_PL_ERROR_H
@@ -179,13 +182,13 @@ extern volatile pl_error_exception pl_error_exception_frames;
  ----------------------------------------------------------------------------*/
 
 /// Expect a condition to be true.
-/// @param condition An expression.
-/// @param error (VDL_EXCEPTION). Exception ID.
+/// @param condition An expression expected to be true.
+/// @param error (int). Error ID.
 /// @param format (const char *). The format of the error message.
 /// @param ... Additional arguments used for snprintf.
 #define pl_error_expect(condition, error, format, ...)    \
     do {                                                  \
-        if ((condition) == 0)                             \
+        if (!(condition))                                 \
         {                                                 \
             pl_error_throw(error, format, ##__VA_ARGS__); \
         }                                                 \
@@ -215,13 +218,14 @@ typedef struct pl_error_ns
                                      ...);
 
     /// Attempt to perform a long jump because of an exception.
-    /// @details This function will not perform a long jump if the catch statement
-    /// is missing
+    /// @details This function will not perform a long jump if the
+    /// `pl_error_catch` statement is missing.
     /// @param error (int). Error ID.
     void (*const long_jump_if_catch)(int error);
 
     /// The default handler for no catch statement.
-    /// @details The default handler prints the error message and abort the program.
+    /// @details The default handler prints the error message
+    /// and abort the program.
     _Noreturn void (*const default_error_handler)(void);
 
 #ifdef PL_TEST
