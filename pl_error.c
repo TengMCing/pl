@@ -1,6 +1,8 @@
 //
 // Created by Patrick Li on 29/6/2023.
 //
+// Checked by Patrick Li on 10/19/2023
+//
 
 #include "pl_error.h"
 #include "stdarg.h"
@@ -11,6 +13,10 @@
     #include "pl_unittest.h"
     #include "string.h"
 #endif//PL_TEST
+
+/*-----------------------------------------------------------------------------
+ |  Exception
+ ----------------------------------------------------------------------------*/
 
 /// A global buffer for storing error message.
 static char global_error_message[PL_ERROR_MAX_MESSAGE_LEN] = {0};
@@ -29,6 +35,7 @@ extern volatile pl_error_exception pl_error_exception_frames = {0};
 /// @param file_name (const char *). File name.
 /// @param line (int). The line number.
 /// @param format (const char *). Format for the additional error message.
+/// If this is an empty string, the error message buffer will not be updated.
 /// @param ... Additional arguments passed to snprintf.
 static void save_error_message(const int error,
                                const char *const function_name,
@@ -81,11 +88,11 @@ static pl_unittest_summary test_save_error_message(void)
                             (save_error_message(1, "a", "b", 123, "test!"),
                              strcmp("[E001] Error raised by <a> at b:123: test!\n", global_error_message) == 0));
     pl_unittest_expect_true(summary,
-                            (save_error_message(1, "aa", "bb", 1234, ""),
-                             strcmp("[E001] Error raised by <a> at b:123: test!\n", global_error_message) == 0));
+                            (save_error_message(2, "aa", "bb", 1234, ""),
+                             strcmp("[E002] Error raised by <a> at b:123: test!\n", global_error_message) == 0));
     pl_unittest_expect_true(summary,
-                            (save_error_message(1, "aa", "bb", 1234, "test!"),
-                             strcmp("[E001] Error raised by <aa> at bb:1234: test!\n", global_error_message) == 0));
+                            (save_error_message(3, "aa", "bb", 1234, "test!"),
+                             strcmp("[E003] Error raised by <aa> at bb:1234: test!\n", global_error_message) == 0));
     global_error_message[0] = '\0';
 
     return summary;
@@ -96,8 +103,8 @@ static pl_unittest_summary test_save_error_message(void)
  ----------------------------------------------------------------------------*/
 
 /// Attempt to perform a long jump because of an exception.
-/// @details This function will not perform a long jump if the catch statement
-/// is missing
+/// @details This function will not perform a long jump if the
+/// `pl_error_catch` statement is missing.
 /// @param error (int). Error ID.
 static void long_jump_if_catch(const int error)
 {
