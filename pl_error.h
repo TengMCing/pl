@@ -116,6 +116,7 @@ extern volatile pl_error_exception pl_error_exception_frames;
     /// @details Since the exception is disabled, the program will be aborted.
     /// @param error (int). Error ID.
     /// @param format (const char *). The format of the error message.
+    /// If this is an empty string, the error message buffer will not be updated.
     /// @param ... Additional arguments used for snprintf.
     #define pl_error_throw(error, format, ...)                                                       \
         do {                                                                                         \
@@ -127,6 +128,7 @@ extern volatile pl_error_exception pl_error_exception_frames;
     /// Save an error message and throw an exception.
     /// @param error (int). Error ID.
     /// @param format (const char *). The format of the error message.
+    /// If this is an empty string, the error message buffer will not be updated.
     /// @param ... Additional arguments used for snprintf.
     #define pl_error_throw(error, format, ...)                                                       \
         do {                                                                                         \
@@ -196,7 +198,6 @@ extern volatile pl_error_exception pl_error_exception_frames;
 /// Namespace of error.
 typedef struct pl_error_ns
 {
-
     /// Save error message to the global buffer.
     /// @details The buffer will be reset if an encoding error occurred.
     /// @param error (int). The error ID.
@@ -204,6 +205,7 @@ typedef struct pl_error_ns
     /// @param file_name (const char *). File name.
     /// @param line (int). The line number.
     /// @param format (const char *). Format for the additional error message.
+    /// If this is an empty string, the error message buffer will not be updated.
     /// @param ... Additional arguments passed to snprintf.
     void (*const save_error_message)(int error,
                                      const char *function_name,
