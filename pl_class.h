@@ -5,7 +5,7 @@
 #ifndef PL_PL_CLASS_H
 #define PL_PL_CLASS_H
 
-#include "stdlib.h"
+#include "stddef.h"
 
 /// Enum of classes.
 enum
