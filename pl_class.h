@@ -7,7 +7,15 @@
 
 #include "stddef.h"
 
+/*-----------------------------------------------------------------------------
+ |  Class metadata
+ ----------------------------------------------------------------------------*/
+
+/// Total number of classes.
+#define PL_NUM_CLASS 5
+
 /// Enum of classes.
+/// @details Classes should follow the format "PL_CLASS_{NAME}".
 enum
 {
     PL_CLASS_CHAR   = 0,
