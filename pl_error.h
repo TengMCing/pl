@@ -89,14 +89,14 @@ extern volatile pl_error_exception pl_error_exception_frames;
     /// @details Since the exception is disabled, the program will be aborted
     /// if an exception occurred. This block of code will never be run.
     #define pl_error_catch \
-        else {}             \
-        }                   \
+        else {}            \
+        }                  \
         if (0)
 #else
     /// @dscription Catch an exception.
-    /// @details pl_error_try needs to be paired with pl_error_catch.
+    /// @details `pl_error_try` needs to be paired with `pl_error_catch`.
     /// You should always `pl_error_rethrow()` if the exception can not be handled.
-    #define pl_error_catch                               \
+    #define pl_error_catch                                \
         else {}                                           \
         pl_error_exception_frames.error = PL_ERROR_NONE;  \
         }                                                 \
