@@ -24,9 +24,8 @@
 #define PL_ERROR_VARIABLE_NOT_FOUND 10
 #define PL_ERROR_INVALID_VARIABLE_NAME 11
 
-
 /*-----------------------------------------------------------------------------
- |  Error report
+ |  Error message
  ----------------------------------------------------------------------------*/
 
 /// Maximum length of the error message.
@@ -36,6 +35,9 @@
  |  Exception
  ----------------------------------------------------------------------------*/
 
+/// Exception struct.
+/// @param frame (jmp_buf *). The current frame.
+/// @param error (volatile int). The error ID.
 typedef volatile struct pl_error_exception
 {
     jmp_buf *frame;
@@ -43,8 +45,6 @@ typedef volatile struct pl_error_exception
 } pl_error_exception;
 
 /// A volatile global variable for storing exception frames.
-/// @param frame (jmp_buf *). The current frame.
-/// @param error (volatile VDL_EXCEPTION_T). The error ID.
 extern volatile pl_error_exception pl_error_exception_frames;
 
 /// Get the current error ID.
