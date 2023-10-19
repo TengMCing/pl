@@ -64,7 +64,10 @@ extern volatile pl_error_exception pl_error_exception_frames;
             if (1)
 #else
     /// @dscription Try one or more statements.
-    /// @details pl_error_try needs to be paired with pl_error_catch_switch.
+    /// @details `pl_error_try` needs to be paired with `pl_error_catch`. Do
+    /// not try to `return` from within a `pl_error_try` block nor `goto` into
+    /// or out of a `pl_error_try` block. This will lead to unpredictable
+    /// consequences.
     #define pl_error_try                                                       \
         {                                                                      \
             jmp_buf *previous_frame, new_frame;                                \
