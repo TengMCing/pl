@@ -25,9 +25,6 @@ enum
     PL_CLASS_LIST   = 4
 };
 
-/// Total number of classes.
-#define PL_NUM_CLASS 5
-
 /// Class names.
 static const char *const PL_CLASS_NAME[PL_NUM_CLASS] = {
         [PL_CLASS_CHAR]   = "CHAR",
@@ -62,7 +59,9 @@ typedef struct pl_class_ns
     /// Check if one class is inherited from another class.
     /// @param derived (int). The derived class.
     /// @param base (int). The base class.
-    /// @return A boolean.
+    /// @return 0 or 1.
+    /// @Exceptions PL_ERROR_UNDEFINED_CLASS: Either `derived` or `base` receives
+    /// undefined class. No side effects.
     int (*const inherit)(int derived, int base);
 
     /// Get the underlying type of a class.
