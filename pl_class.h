@@ -62,15 +62,15 @@ typedef struct pl_class_ns
     /// @param derived (int). The derived class.
     /// @param base (int). The base class.
     /// @return 0 or 1.
-    /// @Exceptions PL_ERROR_UNDEFINED_CLASS: Either `derived` or `base` receives
-    /// undefined class. No side effects.
+    /// @Exceptions
+    /// PL_ERROR_UNDEFINED_CLASS: Either `derived` or `base` receives undefined class. No side effects.
     int (*const inherit)(int derived, int base);
 
     /// Get the underlying type of a class.
     /// @param derived (int). The derived class.
     /// @return The base class.
-    /// @Exceptions PL_ERROR_UNDEFINED_CLASS: `derived` receives undefined class.
-    /// No side effects.
+    /// @Exceptions
+    /// PL_ERROR_UNDEFINED_CLASS: `derived` receives undefined class. No side effects.
     int (*const type)(int derived);
 
 #ifdef PL_TEST
