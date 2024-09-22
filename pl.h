@@ -10,7 +10,6 @@
 #include "pl_class.h"
 #include "pl_gc.h"
 #include "pl_object.h"
-#include "pl_var.h"
 
 /*-----------------------------------------------------------------------------
  |  Library namespace
@@ -34,8 +33,6 @@ typedef struct pl_ns {
     /// Namespace of object.
     const pl_object_ns object;
 
-    /// Namespace of variable.
-    const pl_var_ns var;
 } pl_ns;
 
 /// Get the namespace of the library.

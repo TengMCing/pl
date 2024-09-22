@@ -119,14 +119,99 @@
 #define pl_misc_expand(...) __VA_ARGS__
 
 /*-----------------------------------------------------------------------------
+ |  Init variables
+ ----------------------------------------------------------------------------*/
+
+#define pl_misc_init_variables(constant, ...) pl_misc_paste_arg(pl_misc_concat(pl_misc_init_variables, _), pl_misc_count_arg(__VA_ARGS__))(constant, __VA_ARGS__)
+#define pl_misc_init_variables_1(constant, var1) \
+    do {                                         \
+        var1 = constant;                         \
+    } while (0)
+#define pl_misc_init_variables_2(constant, var1, var2) \
+    do {                                               \
+        var1 = var2 = constant;                        \
+    } while (0)
+#define pl_misc_init_variables_3(constant, var1, var2, var3) \
+    do {                                                     \
+        var1 = var2 = var3 = constant;                       \
+    } while (0)
+#define pl_misc_init_variables_4(constant, var1, var2, var3, var4) \
+    do {                                                           \
+        var1 = var2 = var3 = var4 = constant;                      \
+    } while (0)
+#define pl_misc_init_variables_5(constant, var1, var2, var3, var4, var5) \
+    do {                                                                 \
+        var1 = var2 = var3 = var4 = var5 = constant;                     \
+    } while (0)
+#define pl_misc_init_variables_6(constant, var1, var2, var3, var4, var5, var6) \
+    do {                                                                       \
+        var1 = var2 = var3 = var4 = var5 = var6 = constant;                    \
+    } while (0)
+#define pl_misc_init_variables_7(constant, var1, var2, var3, var4, var5, var6, var7) \
+    do {                                                                             \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = constant;                   \
+    } while (0)
+#define pl_misc_init_variables_8(constant, var1, var2, var3, var4, var5, var6, var7, var8) \
+    do {                                                                                   \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = constant;                  \
+    } while (0)
+#define pl_misc_init_variables_9(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9) \
+    do {                                                                                         \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = constant;                 \
+    } while (0)
+#define pl_misc_init_variables_10(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10) \
+    do {                                                                                                 \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = constant;                 \
+    } while (0)
+#define pl_misc_init_variables_11(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11) \
+    do {                                                                                                        \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = constant;                \
+    } while (0)
+#define pl_misc_init_variables_12(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12) \
+    do {                                                                                                               \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = constant;               \
+    } while (0)
+#define pl_misc_init_variables_13(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13) \
+    do {                                                                                                                      \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = constant;              \
+    } while (0)
+#define pl_misc_init_variables_14(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14) \
+    do {                                                                                                                             \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = var14 = constant;             \
+    } while (0)
+#define pl_misc_init_variables_15(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15) \
+    do {                                                                                                                                    \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = var14 = var15 = constant;            \
+    } while (0)
+#define pl_misc_init_variables_16(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16) \
+    do {                                                                                                                                           \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = var14 = var15 = var16 = constant;           \
+    } while (0)
+#define pl_misc_init_variables_17(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17) \
+    do {                                                                                                                                                  \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = var14 = var15 = var16 = var17 = constant;          \
+    } while (0)
+#define pl_misc_init_variables_18(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18) \
+    do {                                                                                                                                                         \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = var14 = var15 = var16 = var17 = var18 = constant;         \
+    } while (0)
+#define pl_misc_init_variables_19(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19) \
+    do {                                                                                                                                                                \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = var14 = var15 = var16 = var17 = var18 = var19 = constant;        \
+    } while (0)
+#define pl_misc_init_variables_20(constant, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20) \
+    do {                                                                                                                                                                       \
+        var1 = var2 = var3 = var4 = var5 = var6 = var7 = var8 = var9 = var10 = var11 = var12 = var13 = var14 = var15 = var16 = var17 = var18 = var19 = var20 = constant;       \
+    } while (0)
+
+/*-----------------------------------------------------------------------------
  |  Misc namespace
  ----------------------------------------------------------------------------*/
 
 /// Namespace of misc.
-typedef struct pl_misc_ns
-{
+typedef struct pl_misc_ns {
     /*-----------------------------------------------------------------------------
-     |  Compare address (mainly used by qsort)
+     |  Comparison (mainly used by qsort)
      ----------------------------------------------------------------------------*/
 
     /// Compare two chars.
@@ -141,20 +226,28 @@ typedef struct pl_misc_ns
     /// @return 1 if a > b, -1 if a \< b and 0 if a == b.
     int (*const compare_int)(const void *a, const void *b);
 
+    /// Compare two longs.
+    /// @param a (const void *). Pointer to a long.
+    /// @param b (const void *). Pointer to another long.
+    /// @return 1 if a > b, -1 if a \< b and 0 if a == b.
+    int (*const compare_long)(const void *a, const void *b);
+
     /// Compare two doubles.
     /// @param a (const void *). Pointer to a double.
     /// @param b (const void *). Pointer to another double.
     /// @return 1 if a > b, -1 if a \< b and 0 if a == b.
     int (*const compare_double)(const void *a, const void *b);
 
-    /// Compare two addresses.
-    /// @param a (const void *). An address.
-    /// @param b (const void *). Another address.
+    /// Compare two pointers.
+    /// @param a (const void *). A pointer.
+    /// @param b (const void *). Another pointer.
     /// @return 1 if a > b, -1 if a \< b and 0 if a == b.
-    int (*const compare_address)(const void *a, const void *b);
+    int (*const compare_pointer)(const void *a, const void *b);
 
 #ifdef PL_TEST
+
     void (*const test)(void);
+
 #endif//PL_TEST
 
 } pl_misc_ns;

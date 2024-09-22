@@ -1,14 +1,14 @@
 //
 // Created by Patrick Li on 29/6/2023.
 //
-// Checked by Patrick Li on 10/19/2023
-//
+// The exception code is adapted from https://github.com/ThrowTheSwitch/CException
 
 
 #ifndef PL_PL_ERROR_H
 #define PL_PL_ERROR_H
 
 #include "setjmp.h"
+#include "stdnoreturn.h"
 
 /*-----------------------------------------------------------------------------
  |  Error code
@@ -16,19 +16,21 @@
 
 #define PL_ERROR_NONE 0
 #define PL_ERROR_INDEX_OUT_OF_BOUND 1
-#define PL_ERROR_ALLOC_FAIL 2
+#define PL_ERROR_ALLOC_FAILED 2
 #define PL_ERROR_UNDEFINED_CLASS 3
 #define PL_ERROR_INVALID_CAPACITY 4
-#define PL_ERROR_INVALID_NULL_POINTER 5
+#define PL_ERROR_UNEXPECTED_NULL_POINTER 5
 #define PL_ERROR_INVALID_CLASS 6
 #define PL_ERROR_INVALID_LENGTH 7
 #define PL_ERROR_INVALID_NA 8
 #define PL_ERROR_INVALID_FRAME 9
 #define PL_ERROR_VARIABLE_NOT_FOUND 10
 #define PL_ERROR_INVALID_VARIABLE_NAME 11
+#define PL_ERROR_INCOMPATIBLE_LENGTH 12
+#define PL_ERROR_ATTRIBUTE_NOT_FOUND 13
 
 /*-----------------------------------------------------------------------------
- |  Error message
+ |  Error message length
  ----------------------------------------------------------------------------*/
 
 /// Maximum length of the error message.
@@ -154,7 +156,6 @@ extern volatile pl_error_exception pl_error_exception_frames;
     #define pl_error_rethrow()                                                                     \
         do {                                                                                       \
             const pl_error_ns error_ns = pl_error_get_ns();                                        \
-            error_ns.save_error_message(pl_error_get_current(), __func__, __FILE__, __LINE__, ""); \
             error_ns.default_error_handler();                                                      \
         } while (0)
 #else
@@ -162,7 +163,6 @@ extern volatile pl_error_exception pl_error_exception_frames;
     #define pl_error_rethrow()                                                                     \
         do {                                                                                       \
             const pl_error_ns error_ns = pl_error_get_ns();                                        \
-            error_ns.save_error_message(pl_error_get_current(), __func__, __FILE__, __LINE__, ""); \
             error_ns.long_jump_if_catch(pl_error_get_current());                                   \
             error_ns.default_error_handler();                                                      \
         } while (0)
@@ -202,6 +202,7 @@ extern volatile pl_error_exception pl_error_exception_frames;
 typedef struct pl_error_ns
 {
     /// Save error message to the global buffer.
+    /// @NoException
     /// @details The buffer will be reset if an encoding error occurred.
     /// @param error (int). The error ID.
     /// @param function_name (const char *). Function name.
@@ -218,12 +219,14 @@ typedef struct pl_error_ns
                                      ...);
 
     /// Attempt to perform a long jump because of an exception.
+    /// @NoException
     /// @details This function will not perform a long jump if the
     /// `pl_error_catch` statement is missing.
     /// @param error (int). Error ID.
     void (*const long_jump_if_catch)(int error);
 
     /// The default handler for no catch statement.
+    /// @NoException
     /// @details The default handler prints the error message
     /// and abort the program.
     _Noreturn void (*const default_error_handler)(void);

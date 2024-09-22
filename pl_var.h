@@ -5,7 +5,9 @@
 #ifndef PL_PL_VAR_H
 #define PL_PL_VAR_H
 
+#include "pl_gc.h"
 #include "pl_object.h"
+
 
 /*-----------------------------------------------------------------------------
  |  Variable namespace
@@ -18,31 +20,31 @@ typedef struct pl_var_ns
     /// @param name (const char *). The name of the variable.
     /// @param frame (int). To search the variable in which frame.
     /// @return The associated object.
-    /// @when_fails No external side effects.
     pl_object (*const get)(const char *name, int frame);
 
     /// New or set a variable
     /// @param name (const char *). The name of the variable.
     /// @param content (pl_object). The associated object.
     /// @param frame (int). To store the variable in which frame.
-    /// @when_fails No external side effects.
-    void (*const set)(const char *name, pl_object content, int frame);
+    /// @return The original object.
+    pl_object (*const set)(const char *name, pl_object content, int frame);
 
     /// Delete a variable.
     /// @param name (const char *). The name of the variable.
     /// @param frame (int). To search the variable in which frame.
-    /// @when_fails No external side effects.
     void (*const delete)(const char *name, int frame);
 
     /// Delete all variables in a frame.
     /// @param frame (int). The frame number.
-    /// @when_fails No side effects.
     void (*const delete_frame)(int frame);
 
-    /// Delete all variables of in returned frames.
-    /// @param current_frame (int). The current frame number.
-    /// @when_fails No side effects.
-    void (*const delete_returned_frames)(int current_frame);
+    /// Delete all variables in frames greater than a given frame number.
+    /// @param frame (int). The frame number.
+    void (*const delete_frames_greater)(int frame);
+
+    /// Get the greatest frame number.
+    /// @return The frame number.
+    int (*const max_frame_number)(void);
 } pl_var_ns;
 
 /// Get variable namespace.

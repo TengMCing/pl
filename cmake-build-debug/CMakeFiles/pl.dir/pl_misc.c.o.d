@@ -1,6 +1,7 @@
 CMakeFiles/pl.dir/pl_misc.c.o: \
   /Users/patrickli/Desktop/cproject/pl/pl_misc.c \
   /Users/patrickli/Desktop/cproject/pl/pl_misc.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/stdarg.h \
   /Users/patrickli/Desktop/cproject/pl/pl_unittest.h \
   /Users/patrickli/Desktop/cproject/pl/pl_error.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/setjmp.h \
@@ -10,6 +11,7 @@ CMakeFiles/pl.dir/pl_misc.c.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/Availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/AvailabilityVersions.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/AvailabilityInternal.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/stdnoreturn.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/_types.h \

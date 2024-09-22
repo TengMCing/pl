@@ -16,8 +16,8 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # -Wno-declaration-after-statement: A very old warning related to the C90 standard that could be omitted under C17.
 # -Wno-gnu-statement-expression: A GNU feature that needed to to used to implement clean macros for modules like backtrace, Exception handling, etc.
 # -Wno-shadow: Some constructors provided in this library need to nest statement expression together.
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPL_OBJECT_SHORTCUTS -DPL_TEST")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST")
 
-add_executable(pl main.c pl_misc.c pl_misc.h pl.c pl.h pl_error.c pl_error.h pl_object.c pl_object.h pl_class.c pl_class.h pl_gc.c pl_gc.h pl_var.c pl_var.h pl_unittest.h)
+add_executable(pl main.c pl_misc.c pl_misc.h pl.c pl.h pl_error.c pl_error.h pl_object.c pl_object.h pl_class.c pl_class.h pl_gc.c pl_gc.h pl_unittest.h)

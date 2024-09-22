@@ -13,8 +13,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/pl.dir/pl_misc.c.o.d"
   "CMakeFiles/pl.dir/pl_object.c.o"
   "CMakeFiles/pl.dir/pl_object.c.o.d"
-  "CMakeFiles/pl.dir/pl_var.c.o"
-  "CMakeFiles/pl.dir/pl_var.c.o.d"
   "pl"
   "pl.pdb"
 )

@@ -8,17 +8,58 @@
 #include "pl_object.h"
 
 /*-----------------------------------------------------------------------------
+ |  Shortcuts for garbage collection management
+ ----------------------------------------------------------------------------*/
+
+#ifdef PL_GC_SHORTCUTS
+
+/// Begin a frame. Objects will be marked directly unreachable at the end of the frame.
+/// @param ... Objects need to be used inside the frame.
+#define $begin_frame(...)                                                                           \
+        for (pl_object __VA_ARGS__,                                                                     \
+             *pl_misc_with_i_name(__LINE__),                                                            \
+             **pl_misc_with_ip_name(__LINE__) = &pl_misc_with_i_name(__LINE__);                         \
+             pl_misc_with_ip_name(__LINE__);                                                            \
+             pl_misc_with_ip_name(__LINE__) = 0,                                                        \
+             pl_gc_get_ns().multiple_directly_unreachable(pl_misc_count_arg(__VA_ARGS__), __VA_ARGS__)) \
+        {                                                                                               \
+            pl_misc_init_variables(NULL, __VA_ARGS__);                                                  \
+            pl_error_try
+
+/// End a frame. Objects will be marked directly unreachable at the end of the frame.
+#define $end_frame                                   \
+        pl_error_catch                                   \
+        {                                                \
+        }                                                \
+        }                                                \
+        do {                                             \
+            if (pl_error_get_current() != PL_ERROR_NONE) \
+                pl_error_rethrow();                      \
+        } while (0);
+
+/// Set value for object. The previous content will be marked directly unreachable, and the updated content will be marked directly reachable.
+/// @param x Object.
+/// @param content Content.
+#define $set(x, content)                            \
+        do {                                            \
+            if (x != NULL)                              \
+                pl_gc_get_ns().directly_unreachable(x); \
+            x = content;                                \
+            pl_gc_get_ns().directly_reachable(x);       \
+        } while (0)
+#endif
+
+
+/*-----------------------------------------------------------------------------
  |  Garbage collector namespace
  ----------------------------------------------------------------------------*/
 
 /// Garbage collector namespace.
-typedef struct pl_gc_ns
-{
+typedef struct pl_gc_ns {
     /// New an object.
     /// @param class (int). Class of the object.
     /// @param capacity (int). Capacity of the object.
     /// @return A new object.
-    /// @when_fails No side effects.
     pl_object (*const new_object)(int class, int capacity);
 
     /// Resize the object.
@@ -26,7 +67,7 @@ typedef struct pl_gc_ns
     /// greater than the original capacity.
     /// @param x (pl_object). The object.
     /// @param capacity (int). New capacity.
-    /// @when_fails No side effects.
+    /// @return A resized object.
     void (*const resize_object)(pl_object x, int capacity);
 
     /// Reserve memory for an object.
@@ -34,29 +75,35 @@ typedef struct pl_gc_ns
     /// amount for efficiency.
     /// @param x (pl_object). The object.
     /// @param capacity (int). New capacity.
-    /// @when_fails No side effects.
+    /// @return A new object.
     void (*const reserve_object)(pl_object x, int capacity);
 
     /// Declare a directly reachable object.
     /// @param x (pl_object). The object.
-    /// @when_fails No external side effects.
     void (*const directly_reachable)(pl_object x);
+
+    /// Declare multiple directly reachable objects.
+    /// @param length (int). Number of objects.
+    /// @param ... Objects need to be recorded.
+    void (*const multiple_directly_reachable)(int length, ...);
 
     /// Declare a directly unreachable object.
     /// @param x (pl_object). The object.
-    /// @when_fails No external side effects.
     void (*const directly_unreachable)(pl_object x);
 
+    /// Declare multiple directly unreachable objects.
+    /// @param length (int). Number of objects.
+    /// @param ... Objects need to be untracked.
+    void (*const multiple_directly_unreachable)(int length, ...);
+
     /// Run the garbage collector.
-    /// @when_fails Usually no external side effects.\n\n
-    /// Garbage collector may fail to shrink the container but successfully delete
+    /// @details Garbage collector may fail to shrink the container but successfully delete
     /// unreachable objects with error code PL_ERROR_ALLOC_FAIL.\n\n
     /// This happens when `realloc()` fails to allocate space for a new container.\n\n
     /// In this case, the garbage collector still keeps all the reachable objects correctly.\n\n
     void (*const garbage_collect)(void);
 
     /// Report the global table.
-    /// @when_fails No external side effects.
     void (*const report)(void);
 
     /// Kill the garbage collector and release all memory.

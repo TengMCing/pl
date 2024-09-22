@@ -18,27 +18,27 @@ static pl_object global_var_objects = NULL;
  |  Checks
  ----------------------------------------------------------------------------*/
 
-#define check_null_pointer(x) pl_error_expect((x) != NULL,                   \
-                                              PL_ERROR_INVALID_NULL_POINTER, \
+#define check_null_pointer(x) pl_error_expect((x) != NULL,                      \
+                                              PL_ERROR_UNEXPECTED_NULL_POINTER, \
                                               "Can't access NULL pointer `" #x "` !")
 
 /*-----------------------------------------------------------------------------
  |  Init
  ----------------------------------------------------------------------------*/
 
-/// Init the variable table.
-/// @when_fails No side effects.
+// Init the variable table.
 static void init(void)
 {
     const pl_gc_ns gc_ns = pl_gc_get_ns();
 
-    // If the global variable table is initialized and the garbage collector is working.
+    // If the garbage collector is killed, it needs to be restarted.
     if (global_var_table != NULL && gc_ns.check_status())
         return;
 
     const pl_object_ns object_ns = pl_object_get_ns();
 
-    // Try to init the global variable table, and let the variable table to be directly reachable.
+    // Try to init the global variable table, and declare the global
+    // variable table to be directly reachable.
     pl_error_try
     {
         global_var_table   = object_ns.primitive.new(PL_CLASS_LIST, 3);
@@ -67,11 +67,7 @@ static void init(void)
  |  Find
  ----------------------------------------------------------------------------*/
 
-/// Find the variable using a string.
-/// @param name (const char *). The name of the variable.
-/// @param frame (int). To search the variable in which frame.
-/// @return The position or -1 for not found.
-/// @when_fails No side effects.
+// Returns the position or -1 for not found.
 static int find(const char *const name, const int frame)
 {
     check_null_pointer(name);
@@ -111,11 +107,6 @@ static int find(const char *const name, const int frame)
  |  Get
  ----------------------------------------------------------------------------*/
 
-/// Get a variable using a string.
-/// @param name (const char *). The name of the variable.
-/// @param frame (int). To search the variable in which frame.
-/// @return The associated object.
-/// @when_fails No external side effects.
 static pl_object get(const char *const name, const int frame)
 {
     int position = find(name, frame);
@@ -132,12 +123,7 @@ static pl_object get(const char *const name, const int frame)
  |  Set
  ----------------------------------------------------------------------------*/
 
-/// New or set a variable
-/// @param name (const char *). The name of the variable.
-/// @param content (pl_object). The associated object.
-/// @param frame (int). To store the variable in which frame.
-/// @when_fails No external side effects.
-static void set(const char *const name, pl_object content, const int frame)
+static pl_object set(const char *const name, pl_object content, const int frame)
 {
     int position = find(name, frame);
     check_null_pointer(content);
@@ -173,6 +159,8 @@ static void set(const char *const name, pl_object content, const int frame)
             pl_error_rethrow();
         }
     }
+
+    return content;
 }
 
 
@@ -180,8 +168,6 @@ static void set(const char *const name, pl_object content, const int frame)
  |  Delete
  ----------------------------------------------------------------------------*/
 
-/// Delete a variable at a position.
-/// @param position (int). Position of the variable.
 static void delete_pos(const int position)
 {
     if (position == -1)
@@ -216,10 +202,6 @@ static void delete_pos(const int position)
     global_var_objects->length--;
 }
 
-/// Delete a variable.
-/// @param name (const char *). The name of the variable.
-/// @param frame (int). To search the variable in which frame.
-/// @when_fails No external side effects.
 static void delete(const char *name, const int frame)
 {
     int position = find(name, frame);
@@ -230,9 +212,6 @@ static void delete(const char *name, const int frame)
  |  Delete a frame
  ----------------------------------------------------------------------------*/
 
-/// Delete all variables in a frame.
-/// @param frame (int). The frame number.
-/// @when_fails No side effects.
 static void delete_frame(const int frame)
 {
     pl_error_expect(frame >= 0,
@@ -256,28 +235,41 @@ static void delete_frame(const int frame)
  |  Delete returned frames
  ----------------------------------------------------------------------------*/
 
-/// Delete all variables of in returned frames.
-/// @param current_frame (int). The current frame number.
-/// @when_fails No side effects.
-static void delete_returned_frames(const int current_frame)
+static void delete_frames_greater(const int frame)
 {
-    pl_error_expect(current_frame >= 0,
+    pl_error_expect(frame >= 0,
                     PL_ERROR_INVALID_FRAME,
                     "Frame [%d] is negative!",
-                    current_frame);
+                    frame);
 
     int i                       = 0;
     int *const frame_data_array = global_var_frames->data;
     while (i < global_var_frames->length)
     {
         int position = frame_data_array[i];
-        if (position > current_frame)
+        if (position > frame)
             delete_pos(position);
         else
             i++;
     }
 }
 
+/*-----------------------------------------------------------------------------
+ |  Get the max frame number
+ ----------------------------------------------------------------------------*/
+
+static int max_frame_number(void)
+{
+    init();
+    int max_frame               = -1;
+    int *const frame_data_array = global_var_frames->data;
+    pl_misc_for_i(global_var_frames->length)
+    {
+        if (frame_data_array[i] > max_frame)
+            max_frame = frame_data_array[i];
+    }
+    return max_frame;
+}
 
 /*-----------------------------------------------------------------------------
  |  Get variable namespace
@@ -289,6 +281,7 @@ pl_var_ns pl_var_get_ns(void)
                                      .set                    = set,
                                      .delete                 = delete,
                                      .delete_frame           = delete_frame,
-                                     .delete_returned_frames = delete_returned_frames};
+                                     .delete_frames_greater = delete_frames_greater,
+                                     .max_frame_number       = max_frame_number};
     return var_ns;
 }

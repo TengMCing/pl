@@ -5,7 +5,9 @@
 #include "pl_gc.h"
 #include "pl_class.h"
 #include "pl_error.h"
+#include "stdarg.h"
 #include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
 
 // A global pointer to the vector table.
@@ -19,9 +21,13 @@ static void delete_object(pl_object x);
 static void init_table(pl_object *table_p);
 static void table_record_object(pl_object table, pl_object x);
 
-#define check_null_pointer(x) pl_error_expect((x) != NULL,                   \
-                                              PL_ERROR_INVALID_NULL_POINTER, \
-                                              "Can't access NULL pointer `" #x "` !")
+#define check_null_pointer(x) pl_error_expect((x) != NULL,                      \
+                                              PL_ERROR_UNEXPECTED_NULL_POINTER, \
+                                              "Unexpected NULL pointer `" #x "` provided!")
+
+#define check_missing_value(x) pl_error_expect(!pl_is_na(x),        \
+                                               PL_ERROR_INVALID_NA, \
+                                               "Unexpected missing value `" #x "` !")
 
 /*-----------------------------------------------------------------------------
  |  Object memory management
@@ -31,61 +37,52 @@ static void table_record_object(pl_object table, pl_object x);
  |  New object
  ----------------------------------------------------------------------------*/
 
-/// New an object without recording it by the garbage collector.
-/// @param class (int). Class of the object.
-/// @param capacity (int). Capacity of the object.
-/// @return A new object.
-/// @when_fails No side effects.
 static pl_object new_object_without_recording(const int class, const int capacity)
 {
+    check_missing_value(class);
+    check_missing_value(capacity);
     pl_error_expect(class >= 0 && class < PL_NUM_CLASS,
                     PL_ERROR_UNDEFINED_CLASS,
-                    "Undefined class [%d]!",
-                    class);
+                    "Undefined class [%d]!", class);
 
     pl_error_expect(capacity > 0 && capacity <= PL_OBJECT_MAX_CAPACITY,
                     PL_ERROR_INVALID_CAPACITY,
-                    "Invalid capacity [%d]!",
-                    capacity);
+                    "Invalid capacity [%d]!", capacity);
 
-    // Allocate memory for the object and its data.
-    volatile pl_object object_memory = NULL;
-    volatile pl_object data_memory   = NULL;
+    // Allocate memory for the object and the data.
+    void *object_mem      = NULL;
+    void *object_data_mem = NULL;
+    object_mem            = malloc(sizeof(pl_object_struct));
+    object_data_mem       = malloc(pl_object_data_size(class, capacity));
+
     pl_error_try
     {
-        object_memory = malloc(sizeof(pl_object_struct));
-        data_memory   = malloc((size_t) capacity * PL_CLASS_ELEMENT_SIZE[class]);
-
-        pl_error_expect(object_memory != NULL, PL_ERROR_ALLOC_FAIL, "`malloc()` fails!");
-        pl_error_expect(data_memory != NULL, PL_ERROR_ALLOC_FAIL, "`malloc()` fails!");
+        pl_error_expect(object_mem != NULL, PL_ERROR_ALLOC_FAILED, "`malloc()` fails!");
+        pl_error_expect(object_data_mem != NULL, PL_ERROR_ALLOC_FAILED, "`malloc()` fails!");
     }
     pl_error_catch
     {
-        // If the allocation fails, release the memory and rethrow the exception.
-        free(object_memory);
-        free(data_memory);
+        free(object_mem);
+        free(object_data_mem);
         pl_error_rethrow();
     }
+
+    pl_object object = object_mem;
 
     // Prepare the metadata struct.
     pl_object_struct object_struct_copy = {.class     = class,
                                            .capacity  = capacity,
                                            .length    = 0,
                                            .attribute = NULL,
-                                           .data      = data_memory};
+                                           .data      = object_data_mem};
 
     // Copy it to the allocated metadata memory.
-    memcpy(object_memory, &object_struct_copy, sizeof(pl_object_struct));
+    memcpy(object, &object_struct_copy, sizeof(pl_object_struct));
 
-    return object_memory;
+    return object;
 }
 
 
-/// New an object.
-/// @param class (int). Class of the object.
-/// @param capacity (int). Capacity of the object.
-/// @return A new object.
-/// @when_fails No side effects.
 static pl_object new_object(const int class, const int capacity)
 {
     // Init the global table.
@@ -113,32 +110,20 @@ static pl_object new_object(const int class, const int capacity)
  |  Resize object
  ----------------------------------------------------------------------------*/
 
-/// Resize the object.
-/// @details Data may be lost if the original length of the object is
-/// greater than the original capacity.
-/// @param x (pl_object). The object.
-/// @param capacity (int). New capacity.
-/// @when_fails No side effects.
 static void resize_object(pl_object x, const int capacity)
 {
     check_null_pointer(x);
+    check_missing_value(capacity);
     pl_error_expect(capacity > 0 && capacity <= PL_OBJECT_MAX_CAPACITY,
                     PL_ERROR_INVALID_CAPACITY,
                     "Invalid capacity [%d]!",
                     capacity);
 
     // Realloc memory block for the data.
-    void *const memory = realloc(x->data,
-                                 (size_t) capacity * PL_CLASS_ELEMENT_SIZE[x->class]);
-    pl_error_expect(memory != NULL, PL_ERROR_ALLOC_FAIL, "`realloc()` fails!");
-
-    // Prepare the metadata struct.
-    // Copy it to the result metadata memory.
-    pl_object_struct tmp_struct = {.class    = x->class,
-                                   .capacity = capacity,
-                                   .length   = x->length,
-                                   .data     = memory};
-    memcpy(x, &tmp_struct, sizeof(pl_object_struct));
+    void *data_mem = realloc(x->data, pl_object_data_size(x->class, capacity));
+    pl_error_expect(data_mem != NULL, PL_ERROR_ALLOC_FAILED, "`realloc()` fails!");
+    x->data = data_mem;
+    x->capacity = capacity;
 
     // Some data will be lost if the requested capacity is smaller than the current length.
     if (x->capacity < x->length)
@@ -149,15 +134,10 @@ static void resize_object(pl_object x, const int capacity)
  |  Reserve memory for object
  ----------------------------------------------------------------------------*/
 
-/// Reserve memory for an object.
-/// @details The function may reserve more memory than the requested
-/// amount for efficiency.
-/// @param x (pl_object). The object.
-/// @param capacity (int). New capacity.
-/// @when_fails No side effects.
 static void reserve_object(pl_object x, const int capacity)
 {
     check_null_pointer(x);
+    check_missing_value(capacity);
     pl_error_expect(capacity > 0 && capacity < PL_OBJECT_MAX_CAPACITY,
                     PL_ERROR_INVALID_CAPACITY,
                     "Invalid capacity [%d]!",
@@ -177,6 +157,8 @@ static void reserve_object(pl_object x, const int capacity)
         else
             final_capacity += threshold;
     }
+    if (final_capacity > PL_OBJECT_MAX_CAPACITY)
+        final_capacity = PL_OBJECT_MAX_CAPACITY - 1;
 
     // Resize the object to the final capacity.
     resize_object(x, final_capacity);
@@ -187,14 +169,9 @@ static void reserve_object(pl_object x, const int capacity)
  |  Delete object
  ----------------------------------------------------------------------------*/
 
-/// Delete an object.
-/// @param x (pl_object). The object.
-/// @when_fails No side effects.
 static void delete_object(pl_object x)
 {
     check_null_pointer(x);
-
-    // Free both the struct and the data container.
     free(x->data);
     free(x);
 }
@@ -207,9 +184,6 @@ static void delete_object(pl_object x)
  |  Init table
  ----------------------------------------------------------------------------*/
 
-/// Init a table.
-/// @param table_p (pl_object *). Pointer to a table.
-/// @when_fails No side effects.
 static void init_table(pl_object *const table_p)
 {
     // Allocate memory for the table if it is uninitialized.
@@ -221,12 +195,12 @@ static void init_table(pl_object *const table_p)
  |  Find object
  ----------------------------------------------------------------------------*/
 
-/// Find an object in a table.
-/// @param table (pl_object). The table.
-/// @param x (pl_object). The object.
-/// @return -1 if not found, otherwise returns the index.
+// Find an object from a table, -1 for not found.
 static int table_find_object(pl_object table, pl_object x)
 {
+    if (x == NULL)
+        return -1;
+
     int head    = 0;
     int tail    = table->length - 1;
     int current = 0;
@@ -254,10 +228,6 @@ static int table_find_object(pl_object table, pl_object x)
  |  Record object
  ----------------------------------------------------------------------------*/
 
-/// Record an object by a table.
-/// @param table (pl_object). The table.
-/// @param x (pl_object). The object.
-/// @when_fails No side effects.
 static void table_record_object(pl_object table, pl_object x)
 {
     check_null_pointer(x);
@@ -302,7 +272,7 @@ static void table_record_object(pl_object table, pl_object x)
         {
             memmove(data_array + head + 1,
                     data_array + head,
-                    (size_t) (table->length - head) * PL_CLASS_ELEMENT_SIZE[PL_CLASS_LIST]);
+                    pl_object_data_size(PL_CLASS_LIST, table->length - head));
             data_array[head] = x;
         }
 
@@ -314,10 +284,6 @@ static void table_record_object(pl_object table, pl_object x)
  |  Untrack object
  ----------------------------------------------------------------------------*/
 
-/// Untrack an object by a table.
-/// @param table (pl_object). The table.
-/// @param x (pl_object). The object.
-/// @when_fails No side effects.
 static void table_untrack_object(pl_object table, pl_object x)
 {
     check_null_pointer(x);
@@ -340,7 +306,7 @@ static void table_untrack_object(pl_object table, pl_object x)
     // Otherwise, move the data.
     memmove(data_array + index,
             data_array + index + 1,
-            (size_t) (table->length - index - 1) * PL_CLASS_ELEMENT_SIZE[PL_CLASS_LIST]);
+            pl_object_data_size(PL_CLASS_LIST, table->length - index - 1));
     table->length--;
 }
 
@@ -348,38 +314,78 @@ static void table_untrack_object(pl_object table, pl_object x)
  |  Directly reachable
  ----------------------------------------------------------------------------*/
 
-/// Declare a directly reachable object.
-/// @param x (pl_object). The object.
-/// @when_fails No external side effects.
 static void directly_reachable(pl_object x)
 {
     // Init the table.
     init_table(&global_directly_reachable);
 
-    table_record_object(global_directly_reachable, x);
+    if (x != NULL)
+        table_record_object(global_directly_reachable, x);
+}
+
+/*-----------------------------------------------------------------------------
+ |  Multiple directly reachable
+ ----------------------------------------------------------------------------*/
+
+static void multiple_directly_reachable(const int length, ...)
+{
+    // Init the table.
+    init_table(&global_directly_reachable);
+
+    if (length <= 0)
+        return;
+
+    va_list ap;
+    va_start(ap, length);
+    pl_misc_for_i(length)
+    {
+        pl_object x = va_arg(ap, pl_object);
+        if (x != NULL)
+            table_record_object(global_directly_reachable, x);
+    }
+    va_end(ap);
 }
 
 /*-----------------------------------------------------------------------------
  |  Directly unreachable
  ----------------------------------------------------------------------------*/
 
-/// Declare a directly unreachable object.
-/// @param x (pl_object). The object.
-/// @when_fails No external side effects.
 static void directly_unreachable(pl_object x)
 {
     // Init the table.
     init_table(&global_directly_reachable);
 
-    table_untrack_object(global_directly_reachable, x);
+    if (x != NULL)
+        table_untrack_object(global_directly_reachable, x);
+}
+
+/*-----------------------------------------------------------------------------
+ |  Multiple directly unreachable
+ ----------------------------------------------------------------------------*/
+
+static void multiple_directly_unreachable(const int length, ...)
+{
+    // Init the table.
+    init_table(&global_directly_reachable);
+
+    if (length <= 0)
+        return;
+
+    va_list ap;
+    va_start(ap, length);
+    pl_misc_for_i(length)
+    {
+        pl_object x = va_arg(ap, pl_object);
+        if (x != NULL)
+            table_untrack_object(global_directly_reachable, x);
+    }
+    va_end(ap);
 }
 
 /*-----------------------------------------------------------------------------
  |  Garbage collect
  ----------------------------------------------------------------------------*/
 
-/// Update the reachable table.
-/// @when_fails No external side effects.
 static void update_reachable(void)
 {
     // Init the reachable and directly reachable.
@@ -387,26 +393,27 @@ static void update_reachable(void)
     init_table(&global_reachable_unordered);
     init_table(&global_directly_reachable);
 
+    // Reset global reachable
+    global_reachable->length = 0;
+
     // Do nothing if the global directly reachable has no objects.
     if (global_directly_reachable->length == 0)
         return;
 
     // Resize global reachable and global reachable unordered.
-    resize_object(global_reachable,
-                  global_directly_reachable->length == 0 ? 1 : global_directly_reachable->length);
-    resize_object(global_reachable_unordered,
-                  global_directly_reachable->length == 0 ? 1 : global_directly_reachable->length);
+    resize_object(global_reachable, global_directly_reachable->length);
+    resize_object(global_reachable_unordered, global_directly_reachable->length);
 
     // Copy all the directly reachable to unordered reachable as a starting point.
     memcpy(global_reachable_unordered->data,
            global_directly_reachable->data,
-           (size_t) global_directly_reachable->length * PL_CLASS_ELEMENT_SIZE[PL_CLASS_LIST]);
+           pl_object_data_size(PL_CLASS_LIST, global_directly_reachable->length));
     global_reachable_unordered->length = global_directly_reachable->length;
 
     // Also make a copy to reachable.
     memcpy(global_reachable->data,
            global_directly_reachable->data,
-           (size_t) global_directly_reachable->length * PL_CLASS_ELEMENT_SIZE[PL_CLASS_LIST]);
+           pl_object_data_size(PL_CLASS_LIST, global_directly_reachable->length));
     global_reachable->length = global_directly_reachable->length;
 
     // Use BFS to find all reachable objects.
@@ -485,12 +492,9 @@ static void update_reachable(void)
     }
 }
 
-/// Run the garbage collector.
-/// @when_fails Usually no external side effects.\n\n
-/// Garbage collector may fail to shrink the container but successfully delete
-/// unreachable objects with error code PL_ERROR_ALLOC_FAIL.\n\n
-/// This happens when `realloc()` fails to allocate space for a new container.\n\n
-/// In this case, the garbage collector still keeps all the reachable objects correctly.\n\n
+
+#include <malloc/malloc.h>
+
 static void garbage_collect(void)
 {
     // Init all the tables.
@@ -519,8 +523,10 @@ static void garbage_collect(void)
     resize_object(global_table, global_table->length == 0 ? 1 : global_table->length);
 }
 
-/// Report the global table.
-/// @when_fails No external side effects.
+/*-----------------------------------------------------------------------------
+ |  Report memory usage
+ ----------------------------------------------------------------------------*/
+
 static void report(void)
 {
     // Init the global table
@@ -533,7 +539,7 @@ static void report(void)
     size_t total_size = 0;
     pl_misc_for_i(global_table->length)
     {
-        total_size += PL_CLASS_ELEMENT_SIZE[data_array[i]->class] * (size_t) data_array[i]->capacity + sizeof(pl_object_struct);
+        total_size += pl_object_size(data_array[i]);
     }
 
     // Print the report.
@@ -542,19 +548,31 @@ static void report(void)
            global_table->length,
            total_size);
 
+    printf("\t│ Object     │ %-16s │ %-8s │ %-10s │ %-12s │ %s │ %s │\n",
+           "Address",
+           "Class",
+           "Length",
+           "Element size",
+           "Base size",
+           "Total size");
     pl_misc_for_i(global_table->length)
     {
-        printf("\tObject %4d <%p>: %-4s %3d Items, %lu Bytes\n",
+        printf("\t│ %-10d │ <%p> │ %-8s │ %-10d │ %-1lu Bytes      │ %lu Bytes  │ %lu Bytes   │\n",
                i,
                (const void *) data_array[i],
                PL_CLASS_NAME[data_array[i]->class],
                data_array[i]->length,
-               PL_CLASS_ELEMENT_SIZE[data_array[i]->class] * (size_t) data_array[i]->capacity + sizeof(pl_object_struct));
+               PL_CLASS_ELEMENT_SIZE[data_array[i]->class],
+               sizeof(pl_object_struct),
+               pl_object_size(data_array[i]));
     }
     puts("");
 }
 
-/// Kill the garbage collector and release all memory.
+/*-----------------------------------------------------------------------------
+ |  Kill the garbage collector
+ ----------------------------------------------------------------------------*/
+
 static void kill(void)
 {
     pl_object *const vectors = global_table->data;
@@ -574,8 +592,10 @@ static void kill(void)
     global_table               = NULL;
 }
 
-/// Check the status of the garbage collector.
-/// @return 0 for stopped, 1 for working.
+/*-----------------------------------------------------------------------------
+ |  Check garbage collector status
+ ----------------------------------------------------------------------------*/
+
 static int check_status(void)
 {
     return global_table != NULL;
@@ -587,14 +607,16 @@ static int check_status(void)
 
 pl_gc_ns pl_gc_get_ns(void)
 {
-    static const pl_gc_ns gc_ns = {.new_object           = new_object,
-                                   .resize_object        = resize_object,
-                                   .reserve_object       = reserve_object,
-                                   .directly_reachable   = directly_reachable,
-                                   .directly_unreachable = directly_unreachable,
-                                   .garbage_collect      = garbage_collect,
-                                   .report               = report,
-                                   .kill                 = kill,
-                                   .check_status         = check_status};
+    static const pl_gc_ns gc_ns = {.new_object                    = new_object,
+                                   .resize_object                 = resize_object,
+                                   .reserve_object                = reserve_object,
+                                   .directly_reachable            = directly_reachable,
+                                   .multiple_directly_reachable   = multiple_directly_reachable,
+                                   .directly_unreachable          = directly_unreachable,
+                                   .multiple_directly_unreachable = multiple_directly_unreachable,
+                                   .garbage_collect               = garbage_collect,
+                                   .report                        = report,
+                                   .kill                          = kill,
+                                   .check_status                  = check_status};
     return gc_ns;
 }

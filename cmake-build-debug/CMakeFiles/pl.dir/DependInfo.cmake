@@ -15,11 +15,14 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/patrickli/Desktop/cproject/pl/pl_gc.c" "CMakeFiles/pl.dir/pl_gc.c.o" "gcc" "CMakeFiles/pl.dir/pl_gc.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_misc.c" "CMakeFiles/pl.dir/pl_misc.c.o" "gcc" "CMakeFiles/pl.dir/pl_misc.c.o.d"
   "/Users/patrickli/Desktop/cproject/pl/pl_object.c" "CMakeFiles/pl.dir/pl_object.c.o" "gcc" "CMakeFiles/pl.dir/pl_object.c.o.d"
-  "/Users/patrickli/Desktop/cproject/pl/pl_var.c" "CMakeFiles/pl.dir/pl_var.c.o" "gcc" "CMakeFiles/pl.dir/pl_var.c.o.d"
   )
 
-# Targets to which this target links.
-set(CMAKE_TARGET_LINKED_INFO_FILES
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.

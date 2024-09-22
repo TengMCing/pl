@@ -1,42 +1,44 @@
 [
 {
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/main.c.o -c /Users/patrickli/Desktop/cproject/pl/main.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/main.c"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -o CMakeFiles/pl.dir/main.c.o -c /Users/patrickli/Desktop/cproject/pl/main.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/main.c",
+  "output": "CMakeFiles/pl.dir/main.c.o"
 },
 {
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_misc.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_misc.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/pl_misc.c"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -o CMakeFiles/pl.dir/pl_misc.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_misc.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_misc.c",
+  "output": "CMakeFiles/pl.dir/pl_misc.c.o"
 },
 {
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl.c.o -c /Users/patrickli/Desktop/cproject/pl/pl.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/pl.c"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -o CMakeFiles/pl.dir/pl.c.o -c /Users/patrickli/Desktop/cproject/pl/pl.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl.c",
+  "output": "CMakeFiles/pl.dir/pl.c.o"
 },
 {
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_error.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_error.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/pl_error.c"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -o CMakeFiles/pl.dir/pl_error.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_error.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_error.c",
+  "output": "CMakeFiles/pl.dir/pl_error.c.o"
 },
 {
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_object.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_object.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/pl_object.c"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -o CMakeFiles/pl.dir/pl_object.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_object.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_object.c",
+  "output": "CMakeFiles/pl.dir/pl_object.c.o"
 },
 {
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_class.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_class.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/pl_class.c"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -o CMakeFiles/pl.dir/pl_class.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_class.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_class.c",
+  "output": "CMakeFiles/pl.dir/pl_class.c.o"
 },
 {
   "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_gc.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_gc.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/pl_gc.c"
-},
-{
-  "directory": "/Users/patrickli/Desktop/cproject/pl/cmake-build-release",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -DPL_OBJECT_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/pl.dir/pl_var.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_var.c",
-  "file": "/Users/patrickli/Desktop/cproject/pl/pl_var.c"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -Wno-extra-semi -Wno-gnu-zero-variadic-macro-arguments -Wno-documentation-unknown-command -Wno-documentation -Wno-declaration-after-statement -Wno-gnu-statement-expression -Wno-shadow -Weverything -Wno-dollar-in-identifier-extension -DPL_OBJECT_SHORTCUTS -DPL_GC_SHORTCUTS -DPL_TEST -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -o CMakeFiles/pl.dir/pl_gc.c.o -c /Users/patrickli/Desktop/cproject/pl/pl_gc.c",
+  "file": "/Users/patrickli/Desktop/cproject/pl/pl_gc.c",
+  "output": "CMakeFiles/pl.dir/pl_gc.c.o"
 }
 ]
