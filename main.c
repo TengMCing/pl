@@ -1,9 +1,15 @@
 #include "pl.h"
 #include "stdio.h"
 
+int test(pl_ns pl)
+{
+    pl.class.test();
+    pl.error.test();
+    pl.gc.test();
+}
+
 int main()
 {
-
     // Get the namespace.
     pl_ns pl = pl_get_ns();
 
@@ -21,9 +27,12 @@ int main()
         pl.object.print(pl.object.as_char(x));
 
         // Set 10 decimals for printing double vector.
-        pl.object.print_set_decimals($c_int(10));
+        pl.object.print_set_decimals($local_c_int(10));
         // R: print(as.double(x))
         pl.object.print(pl.object.as_double(x));
+
+        // R: do.call(print, list(x))
+        pl.object.print($list(x));
 
         // R: z <- list(x, y)
         $set(z, $list(x, y));
@@ -33,14 +42,13 @@ int main()
         // Report the memory usage.
         pl.gc.report();
     }
-    $end_frame
-
-    // The GC needs to be triggered manually at the moment. There is no scheduler for it.
-    // This is a pretty simple stop-the-world GC so use it wisely.
-    pl.gc.garbage_collect();
+    $end_frame_and_gc;
 
     // Report the memory usage.
     pl.gc.report();
+
+    // Run tests
+    test(pl);
 
     return 0;
 }
