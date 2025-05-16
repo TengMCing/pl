@@ -9,7 +9,7 @@
 
 #ifdef PL_TEST
 
-#include "pl_unittest.h"
+    #include "pl_unittest.h"
 
 #endif//PL_TEST
 
@@ -17,7 +17,8 @@
  |  Inherit
  ----------------------------------------------------------------------------*/
 
-static int inherit(const int derived, const int base) {
+static int inherit(const int derived, const int base)
+{
     pl_error_expect(derived >= 0 && derived < PL_NUM_CLASS,
                     PL_ERROR_UNDEFINED_CLASS,
                     "Undefined class [%d]!", derived);
@@ -28,13 +29,15 @@ static int inherit(const int derived, const int base) {
 
     // Check all parents of the derived classes.
     int current = derived;
-    while (current != base && current != -1) {
+    while (current != base && current != -1)
+    {
         current = PL_CLASS_INHERIT[current];
     }
     return current == -1 ? 0 : 1;
 }
 
-static pl_unittest_summary test_inherit(void) {
+static pl_unittest_summary test_inherit(void)
+{
     pl_unittest_summary summary = pl_unittest_new_summary();
 
     pl_unittest_expect_error_is(summary, PL_ERROR_UNDEFINED_CLASS, inherit(PL_NUM_CLASS, PL_CLASS_CHAR));
@@ -55,21 +58,24 @@ static pl_unittest_summary test_inherit(void) {
  |  Get base type
  ----------------------------------------------------------------------------*/
 
-static int type(const int derived) {
+static int type(const int derived)
+{
     pl_error_expect(derived >= 0 && derived < PL_NUM_CLASS,
                     PL_ERROR_UNDEFINED_CLASS,
                     "Undefined class [%d]!", derived);
 
     // Recursively find the base class.
     int current = derived;
-    while (PL_CLASS_INHERIT[current] != -1) {
+    while (PL_CLASS_INHERIT[current] != -1)
+    {
         current = PL_CLASS_INHERIT[current];
     }
 
     return current;
 }
 
-static pl_unittest_summary test_type(void) {
+static pl_unittest_summary test_type(void)
+{
     pl_unittest_summary summary = pl_unittest_new_summary();
 
     pl_unittest_expect_error_is(summary, PL_ERROR_UNDEFINED_CLASS, type(PL_NUM_CLASS));
@@ -84,22 +90,23 @@ static pl_unittest_summary test_type(void) {
  |  Get namespace
  ----------------------------------------------------------------------------*/
 
-static void test(void) {
+static void test(void)
+{
+#ifdef PL_TEST
     printf("In file: %s\n", __FILE__);
     pl_unittest_print_summary(test_inherit());
     pl_unittest_print_summary(test_type());
+#else
+    puts("Test mode is disabled!");
+#endif//PL_TEST
 }
 
 
-pl_class_ns pl_class_get_ns(void) {
-#ifdef PL_TEST
+pl_class_ns pl_class_get_ns(void)
+{
     static const pl_class_ns class_ns = {.inherit = inherit,
-            .type    = type,
-            .test    = test};
-#else
-    static const pl_class_ns class_ns = {.inherit = inherit,
-                                         .type    = type};
-#endif//PL_TEST
+                                         .type    = type,
+                                         .test    = test};
 
     return class_ns;
 }
