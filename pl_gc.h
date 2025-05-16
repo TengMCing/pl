@@ -25,9 +25,9 @@
 
 #ifdef PL_GC_SHORTCUTS
 
-/// Begin a frame. Objects will be marked directly unreachable at the end of the frame.
-/// @param ... Objects need to be used inside the frame.
-#define $begin_frame(...)                                                                           \
+    /// Begin a frame. Objects will be marked directly unreachable at the end of the frame.
+    /// @param ... Objects need to be used inside the frame.
+    #define $begin_frame(...)                                                                           \
         for (pl_object __VA_ARGS__,                                                                     \
              *pl_misc_with_i_name(__LINE__),                                                            \
              **pl_misc_with_ip_name(__LINE__) = &pl_misc_with_i_name(__LINE__);                         \
@@ -38,8 +38,8 @@
             pl_misc_init_variables(NULL, __VA_ARGS__);                                                  \
             pl_error_try
 
-/// End a frame. Objects will be marked directly unreachable at the end of the frame.
-#define $end_frame                                   \
+    /// End a frame. Objects will be marked directly unreachable at the end of the frame.
+    #define $end_frame                                   \
         pl_error_catch                                   \
         {                                                \
         }                                                \
@@ -47,12 +47,24 @@
         do {                                             \
             if (pl_error_get_current() != PL_ERROR_NONE) \
                 pl_error_rethrow();                      \
-        } while (0);
+        } while (0)
 
-/// Set value for object. The previous content will be marked directly unreachable, and the updated content will be marked directly reachable.
-/// @param x Object.
-/// @param content Content.
-#define $set(x, content)                            \
+    /// End a frame. Objects will be marked directly unreachable at the end of the frame and garbage collected.
+    #define $end_frame_and_gc                            \
+        pl_error_catch                                   \
+        {                                                \
+        }                                                \
+        }                                                \
+        do {                                             \
+            if (pl_error_get_current() != PL_ERROR_NONE) \
+                pl_error_rethrow();                      \
+            pl_gc_get_ns().garbage_collect_check();      \
+        } while (0)
+
+    /// Set value for object. The previous content will be marked directly unreachable, and the updated content will be marked directly reachable.
+    /// @param x Object.
+    /// @param content Content.
+    #define $set(x, content)                            \
         do {                                            \
             if (x != NULL)                              \
                 pl_gc_get_ns().directly_unreachable(x); \
@@ -67,7 +79,8 @@
  ----------------------------------------------------------------------------*/
 
 /// Garbage collector namespace.
-typedef struct pl_gc_ns {
+typedef struct pl_gc_ns
+{
     /// New an object.
     /// @param class (int). Class of the object.
     /// @param capacity (int). Capacity of the object.
@@ -115,6 +128,20 @@ typedef struct pl_gc_ns {
     /// In this case, the garbage collector still keeps all the reachable objects correctly.\n\n
     void (*const garbage_collect)(void);
 
+    /// Run the garbage collect scheduler.
+    /// @details Garbage collector may fail to shrink the container but successfully delete
+    /// unreachable objects with error code PL_ERROR_ALLOC_FAIL.\n\n
+    /// This happens when `realloc()` fails to allocate space for a new container.\n\n
+    /// In this case, the garbage collector still keeps all the reachable objects correctly.\n\n
+    /// The garbage collect scheduler has two strategies: PL_GC_STRATEGY_COUNTER and PL_GC_STRATEGY_TIME.\n\n
+    /// The counter method counts the number of time this function is called, and when it reaches
+    /// PL_GC_STRATEGY_COUNTER_MAX, it resets the counter and run the garbage collector.\n\n
+    /// The time method calculates the difference between the current time and the last time running the
+    /// garbage collector, and if it is greater than PL_GC_STRATEGY_TIME_MAX seconds, it runs
+    /// the garbage collector. \n\n
+    /// The PL_GC_STRATEGY marco defines the currently used method.
+    void (*const garbage_collect_check)(void);
+
     /// Report the global table.
     void (*const report)(void);
 
@@ -124,6 +151,9 @@ typedef struct pl_gc_ns {
     /// Check the status of the garbage collector.
     /// @return 0 for stopped, 1 for working.
     int (*const check_status)(void);
+
+    /// Test the namespace.
+    void (*const test)(void);
 } pl_gc_ns;
 
 /// Get garbage collector namespace.
