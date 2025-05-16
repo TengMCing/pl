@@ -23,11 +23,10 @@
 #define PL_ERROR_INVALID_CLASS 6
 #define PL_ERROR_INVALID_LENGTH 7
 #define PL_ERROR_INVALID_NA 8
-#define PL_ERROR_INVALID_FRAME 9
-#define PL_ERROR_VARIABLE_NOT_FOUND 10
-#define PL_ERROR_INVALID_VARIABLE_NAME 11
-#define PL_ERROR_INCOMPATIBLE_LENGTH 12
-#define PL_ERROR_ATTRIBUTE_NOT_FOUND 13
+#define PL_ERROR_INCOMPATIBLE_LENGTH 9
+#define PL_ERROR_ATTRIBUTE_NOT_FOUND 10
+#define PL_ERROR_METHOD_NOT_FOUND 11
+#define PL_ERROR_INVALID_NUMBER_OF_ARGUMENTS 12
 
 /*-----------------------------------------------------------------------------
  |  Error message length
@@ -153,18 +152,18 @@ extern volatile pl_error_exception pl_error_exception_frames;
 #ifdef PL_ERROR_DISABLE
     /// Rethrow the current exception.
     /// @details Since the exception is disabled, the program will be aborted.
-    #define pl_error_rethrow()                                                                     \
-        do {                                                                                       \
-            const pl_error_ns error_ns = pl_error_get_ns();                                        \
-            error_ns.default_error_handler();                                                      \
+    #define pl_error_rethrow()                              \
+        do {                                                \
+            const pl_error_ns error_ns = pl_error_get_ns(); \
+            error_ns.default_error_handler();               \
         } while (0)
 #else
     /// Rethrow the current exception.
-    #define pl_error_rethrow()                                                                     \
-        do {                                                                                       \
-            const pl_error_ns error_ns = pl_error_get_ns();                                        \
-            error_ns.long_jump_if_catch(pl_error_get_current());                                   \
-            error_ns.default_error_handler();                                                      \
+    #define pl_error_rethrow()                                   \
+        do {                                                     \
+            const pl_error_ns error_ns = pl_error_get_ns();      \
+            error_ns.long_jump_if_catch(pl_error_get_current()); \
+            error_ns.default_error_handler();                    \
         } while (0)
 #endif//PL_ERROR_DISABLE
 
@@ -202,7 +201,6 @@ extern volatile pl_error_exception pl_error_exception_frames;
 typedef struct pl_error_ns
 {
     /// Save error message to the global buffer.
-    /// @NoException
     /// @details The buffer will be reset if an encoding error occurred.
     /// @param error (int). The error ID.
     /// @param function_name (const char *). Function name.
@@ -219,22 +217,18 @@ typedef struct pl_error_ns
                                      ...);
 
     /// Attempt to perform a long jump because of an exception.
-    /// @NoException
     /// @details This function will not perform a long jump if the
     /// `pl_error_catch` statement is missing.
     /// @param error (int). Error ID.
     void (*const long_jump_if_catch)(int error);
 
     /// The default handler for no catch statement.
-    /// @NoException
     /// @details The default handler prints the error message
     /// and abort the program.
-    _Noreturn void (*const default_error_handler)(void);
+    void (*const default_error_handler)(void);
 
-#ifdef PL_TEST
     /// Test the namespace.
     void (*const test)(void);
-#endif//PL_TEST
 
 } pl_error_ns;
 
