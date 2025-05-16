@@ -17,12 +17,13 @@
 
 /// Enum of classes.
 /// @details Classes should follow the format "PL_CLASS_{NAME}".
-enum {
-    PL_CLASS_CHAR = 0,
-    PL_CLASS_INT = 1,
-    PL_CLASS_LONG = 2,
-    PL_CLASS_DOUBLE = 3,
-    PL_CLASS_LIST = 4,
+enum
+{
+    PL_CLASS_CHAR     = 0,
+    PL_CLASS_INT      = 1,
+    PL_CLASS_LONG     = 2,
+    PL_CLASS_DOUBLE   = 3,
+    PL_CLASS_LIST     = 4,
     PL_CLASS_EXTERNAL = 5
 };
 
@@ -58,7 +59,8 @@ static const int PL_CLASS_INHERIT[PL_NUM_CLASS] = {
  ----------------------------------------------------------------------------*/
 
 /// Namespace of class.
-typedef struct pl_class_ns {
+typedef struct pl_class_ns
+{
     /// Check if one class is inherited from another class.
     /// @param derived (int). The derived class.
     /// @param base (int). The base class.
@@ -70,12 +72,8 @@ typedef struct pl_class_ns {
     /// @return The base class.
     int (*const type)(int derived);
 
-#ifdef PL_TEST
-
     /// Test the namespace.
     void (*const test)(void);
-
-#endif//PL_TEST
 
 } pl_class_ns;
 
