@@ -10,7 +10,7 @@
 #include "stdio.h"
 
 /// Maximum number of unit tests in a summary.
-#define PL_UNITTEST_MAX_NUM 64
+#define PL_UNITTEST_MAX_NUM 256
 
 /// Summary of unit tests in a file.
 /// @param name (const char *). Name of the summary.
