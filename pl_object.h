@@ -26,7 +26,8 @@ typedef struct pl_object_struct pl_object_struct;
 /// @param attribute (pl_object). Additional attributes.
 /// @param data (void *). A data container.
 typedef pl_object_struct *pl_object;
-struct pl_object_struct {
+struct pl_object_struct
+{
     const int class;
     int capacity;
     int length;
@@ -62,14 +63,7 @@ struct pl_object_struct {
 #define PL_LIST_NA NULL
 #define PL_EXTERNAL_NA NULL
 
-#define pl_is_na(x) _Generic(x, char                     \
-                             : (x) == PL_CHAR_NA, int    \
-                             : (x) == PL_INT_NA, long    \
-                             : (x) == PL_LONG_NA, double \
-                             : (x) != (x), pl_object     \
-                             : (x) == 0, void *          \
-                             : (x) == 0, const void *    \
-                             : (x) == 0)
+#define pl_is_na(x) _Generic(x, char: (x) == PL_CHAR_NA, int: (x) == PL_INT_NA, long: (x) == PL_LONG_NA, double: (x) != (x), pl_object: (x) == 0, void *: (x) == 0, const void *: (x) == 0)
 
 /*-----------------------------------------------------------------------------
  |  Shortcuts for object creation
@@ -77,91 +71,91 @@ struct pl_object_struct {
 
 #ifdef PL_OBJECT_SHORTCUTS
 
-/// New a local char vector.
-/// @details This vector and its content will be automatically destroyed at the end of the scope.
-/// It should not be referenced by any other objects.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $local_c_char(...) (pl_object) (&(pl_object_struct){.class     = PL_CLASS_CHAR,                                    \
-                                                            .capacity  = pl_misc_count_arg(__VA_ARGS__),                   \
-                                                            .length    = pl_misc_count_arg(__VA_ARGS__),                   \
-                                                            .attribute = NULL,                                             \
-                                                            .data      = (char[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}})
+    /// New a local char vector.
+    /// @details This vector and its content will be automatically destroyed at the end of the scope.
+    /// It should not be referenced by any other objects.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $local_c_char(...) (pl_object)(&(pl_object_struct){.class     = PL_CLASS_CHAR,                  \
+                                                               .capacity  = pl_misc_count_arg(__VA_ARGS__), \
+                                                               .length    = pl_misc_count_arg(__VA_ARGS__), \
+                                                               .attribute = NULL,                           \
+                                                               .data      = (char[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}})
 
-/// New a local int vector.
-/// @details This vector and its content will be automatically destroyed at the end of the scope.
-/// It should not be referenced by any other objects.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $local_c_int(...) (pl_object) (&(pl_object_struct){.class     = PL_CLASS_INT,                                     \
-                                                           .capacity  = pl_misc_count_arg(__VA_ARGS__),                   \
-                                                           .length    = pl_misc_count_arg(__VA_ARGS__),                   \
-                                                           .attribute = NULL,                                             \
-                                                           .data      = (int[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}})
+    /// New a local int vector.
+    /// @details This vector and its content will be automatically destroyed at the end of the scope.
+    /// It should not be referenced by any other objects.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $local_c_int(...) (pl_object)(&(pl_object_struct){.class     = PL_CLASS_INT,                   \
+                                                              .capacity  = pl_misc_count_arg(__VA_ARGS__), \
+                                                              .length    = pl_misc_count_arg(__VA_ARGS__), \
+                                                              .attribute = NULL,                           \
+                                                              .data      = (int[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}})
 
-/// New a local long vector.
-/// @details This vector and its content will be automatically destroyed at the end of the scope.
-/// It should not be referenced by any other objects.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $local_c_long(...) (pl_object) (&(pl_object_struct){.class     = PL_CLASS_LONG,                                    \
-                                                            .capacity  = pl_misc_count_arg(__VA_ARGS__),                   \
-                                                            .length    = pl_misc_count_arg(__VA_ARGS__),                   \
-                                                            .attribute = NULL,                                             \
-                                                            .data      = (long[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}})
+    /// New a local long vector.
+    /// @details This vector and its content will be automatically destroyed at the end of the scope.
+    /// It should not be referenced by any other objects.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $local_c_long(...) (pl_object)(&(pl_object_struct){.class     = PL_CLASS_LONG,                  \
+                                                               .capacity  = pl_misc_count_arg(__VA_ARGS__), \
+                                                               .length    = pl_misc_count_arg(__VA_ARGS__), \
+                                                               .attribute = NULL,                           \
+                                                               .data      = (long[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}})
 
-/// New a local double vector.
-/// @details This vector and its content will be automatically destroyed at the end of the scope.
-/// It should not be referenced by any other objects.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $local_c_double(...) (pl_object) (&(pl_object_struct){.class     = PL_CLASS_DOUBLE,                                  \
+    /// New a local double vector.
+    /// @details This vector and its content will be automatically destroyed at the end of the scope.
+    /// It should not be referenced by any other objects.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $local_c_double(...) (pl_object) (&(pl_object_struct){.class     = PL_CLASS_DOUBLE,                                  \
                                                               .capacity  = pl_misc_count_arg(__VA_ARGS__),                   \
                                                               .length    = pl_misc_count_arg(__VA_ARGS__),                   \
                                                               .attribute = NULL,                                             \
                                                               .data      = (double[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}}))
 
-/// New a local external vector.
-/// @details This vector and its content will be automatically destroyed at the end of the scope.
-/// It should not be referenced by any other objects.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $local_c_external(...) (pl_object) (&(pl_object_struct){.class     = PL_CLASS_EXTERNAL,                                \
+    /// New a local external vector.
+    /// @details This vector and its content will be automatically destroyed at the end of the scope.
+    /// It should not be referenced by any other objects.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $local_c_external(...) (pl_object) (&(pl_object_struct){.class     = PL_CLASS_EXTERNAL,                                \
                                                                 .capacity  = pl_misc_count_arg(__VA_ARGS__),                   \
                                                                 .length    = pl_misc_count_arg(__VA_ARGS__),                   \
                                                                 .attribute = NULL,                                             \
                                                                 .data      = (void *[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__}}))
 
 
-/// New a char vector.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $c_char(...) pl.object.primitive.new_from_array(PL_CLASS_CHAR, pl_misc_count_arg(__VA_ARGS__), (char[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
+    /// New a char vector.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $c_char(...) pl_object_get_ns().primitive.new_from_array(PL_CLASS_CHAR, pl_misc_count_arg(__VA_ARGS__), (char[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
 
-/// New a int vector.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $c_int(...) pl.object.primitive.new_from_array(PL_CLASS_INT, pl_misc_count_arg(__VA_ARGS__), (int[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
+    /// New a int vector.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $c_int(...) pl_object_get_ns().primitive.new_from_array(PL_CLASS_INT, pl_misc_count_arg(__VA_ARGS__), (int[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
 
-/// New a long vector.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $c_long(...) pl.object.primitive.new_from_array(PL_CLASS_LONG, pl_misc_count_arg(__VA_ARGS__), (long[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
+    /// New a long vector.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $c_long(...) pl_object_get_ns().primitive.new_from_array(PL_CLASS_LONG, pl_misc_count_arg(__VA_ARGS__), (long[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
 
-/// New a double vector.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $c_double(...) pl.object.primitive.new_from_array(PL_CLASS_DOUBLE, pl_misc_count_arg(__VA_ARGS__), (double[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
+    /// New a double vector.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $c_double(...) pl_object_get_ns().primitive.new_from_array(PL_CLASS_DOUBLE, pl_misc_count_arg(__VA_ARGS__), (double[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
 
-/// New a external vector.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $c_external(...) pl.object.primitive.new_from_array(PL_CLASS_EXTERNAL, pl_misc_count_arg(__VA_ARGS__), (void *[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
+    /// New a external vector.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $c_external(...) pl_object_get_ns().primitive.new_from_array(PL_CLASS_EXTERNAL, pl_misc_count_arg(__VA_ARGS__), (void * [pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
 
-/// New a list.
-/// @param ... Items need to be stored by the object.
-/// @return A new object.
-#define $list(...) pl.object.primitive.new_from_array(PL_CLASS_LIST, pl_misc_count_arg(__VA_ARGS__), (pl_object[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
+    /// New a list.
+    /// @param ... Items need to be stored by the object.
+    /// @return A new object.
+    #define $list(...) pl_object_get_ns().primitive.new_from_array(PL_CLASS_LIST, pl_misc_count_arg(__VA_ARGS__), (pl_object[pl_misc_count_arg(__VA_ARGS__)]){__VA_ARGS__})
 
 #endif//PL_OBJECT_SHORTCUTS
 
@@ -170,9 +164,11 @@ struct pl_object_struct {
  ----------------------------------------------------------------------------*/
 
 /// Object namespace
-typedef struct pl_object_ns {
+typedef struct pl_object_ns
+{
     /// Namespace for primitive functions.
-    struct pl_object_primitive_ns {
+    struct pl_object_primitive_ns
+    {
 
         /*-----------------------------------------------------------------------------
          |  Primitive new
@@ -512,7 +508,7 @@ typedef struct pl_object_ns {
     /// the same length as x.
     pl_object (*const in)(pl_object x, pl_object y);
 
-    /// Set number of decimals.
+    /// Set number of decimals for printing double.
     /// @param x (pl_object). An int object.
     void (*const print_set_decimals)(pl_object x);
 
@@ -544,7 +540,8 @@ typedef struct pl_object_ns {
     /// @return A new PL_CLASS_DOUBLE object.
     pl_object (*const as_double)(pl_object x);
 
-    struct pl_object_attribute_ns {
+    struct pl_object_attribute_ns
+    {
         /// Check if an attribute name exists.
         /// @param x (pl_object). The object.
         /// @param name (pl_object). The attribute name.
