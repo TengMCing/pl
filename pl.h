@@ -5,10 +5,11 @@
 #ifndef PL_PL_H
 #define PL_PL_H
 
-#include "pl_misc.h"
-#include "pl_error.h"
 #include "pl_class.h"
+#include "pl_error.h"
 #include "pl_gc.h"
+#include "pl_generic.h"
+#include "pl_misc.h"
 #include "pl_object.h"
 
 /*-----------------------------------------------------------------------------
@@ -16,7 +17,8 @@
  ----------------------------------------------------------------------------*/
 
 /// Namespace of the library.
-typedef struct pl_ns {
+typedef struct pl_ns
+{
 
     /// Namespace of misc.
     const pl_misc_ns misc;
