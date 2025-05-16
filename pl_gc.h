@@ -8,6 +8,18 @@
 #include "pl_object.h"
 
 /*-----------------------------------------------------------------------------
+ |  Garbage collector strategy
+ ----------------------------------------------------------------------------*/
+
+#define PL_GC_STRATEGY_COUNTER 1
+#define PL_GC_STRATEGY_TIME 2
+
+#define PL_GC_STRATEGY_COUNTER_MAX 100
+#define PL_GC_STRATEGY_TIME_MAX 10
+
+#define PL_GC_STRATEGY PL_GC_STRATEGY_TIME
+
+/*-----------------------------------------------------------------------------
  |  Shortcuts for garbage collection management
  ----------------------------------------------------------------------------*/
 
