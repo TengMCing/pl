@@ -5,10 +5,12 @@
 #include "pl_gc.h"
 #include "pl_class.h"
 #include "pl_error.h"
-#include "stdarg.h"
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#include "pl_unittest.h"
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 // A global pointer to the vector table.
 // It needs to be initialized by `gc_init` before use.
@@ -25,9 +27,9 @@ static void table_record_object(pl_object table, pl_object x);
                                               PL_ERROR_UNEXPECTED_NULL_POINTER, \
                                               "Unexpected NULL pointer `" #x "` provided!")
 
-#define check_missing_value(x) pl_error_expect(!pl_is_na(x),        \
-                                               PL_ERROR_INVALID_NA, \
-                                               "Unexpected missing value `" #x "` !")
+#define check_na(x) pl_error_expect(!pl_is_na(x),        \
+                                    PL_ERROR_INVALID_NA, \
+                                    "Unexpected missing value `" #x "` !")
 
 /*-----------------------------------------------------------------------------
  |  Object memory management
@@ -39,8 +41,8 @@ static void table_record_object(pl_object table, pl_object x);
 
 static pl_object new_object_without_recording(const int class, const int capacity)
 {
-    check_missing_value(class);
-    check_missing_value(capacity);
+    check_na(class);
+    check_na(capacity);
     pl_error_expect(class >= 0 && class < PL_NUM_CLASS,
                     PL_ERROR_UNDEFINED_CLASS,
                     "Undefined class [%d]!", class);
@@ -82,6 +84,33 @@ static pl_object new_object_without_recording(const int class, const int capacit
     return object;
 }
 
+static pl_unittest_summary test_new_object_without_recording(void)
+{
+    pl_unittest_summary summary = pl_unittest_new_summary();
+
+    pl_unittest_expect_error_is(summary, PL_ERROR_INVALID_NA, new_object_without_recording(PL_INT_NA, 1));
+    pl_unittest_expect_error_is(summary, PL_ERROR_INVALID_NA, new_object_without_recording(PL_CLASS_INT, PL_INT_NA));
+    pl_unittest_expect_error_is(summary, PL_ERROR_UNDEFINED_CLASS, new_object_without_recording(-1, 1));
+    pl_unittest_expect_error_is(summary, PL_ERROR_UNDEFINED_CLASS, new_object_without_recording(PL_NUM_CLASS, 1));
+    pl_unittest_expect_error_is(summary, PL_ERROR_INVALID_CAPACITY, new_object_without_recording(PL_CLASS_INT, -1));
+    pl_unittest_expect_error_is(summary, PL_ERROR_INVALID_CAPACITY, new_object_without_recording(PL_CLASS_INT, PL_OBJECT_MAX_CAPACITY + 1));
+
+    pl_object object = NULL;
+    pl_unittest_expect_no_error(summary, object = new_object_without_recording(PL_CLASS_CHAR, 1));
+    if (object == NULL)
+        return summary;
+
+    pl_unittest_expect_true(summary, object->length == 0);
+    pl_unittest_expect_true(summary, object->data != NULL);
+    pl_unittest_expect_true(summary, object->capacity == 1);
+    pl_unittest_expect_true(summary, object->class == PL_CLASS_CHAR);
+    pl_unittest_expect_true(summary, object->attribute == NULL);
+    free(object->data);
+    free(object);
+
+    return summary;
+}
+
 
 static pl_object new_object(const int class, const int capacity)
 {
@@ -106,6 +135,7 @@ static pl_object new_object(const int class, const int capacity)
     return object;
 }
 
+
 /*-----------------------------------------------------------------------------
  |  Resize object
  ----------------------------------------------------------------------------*/
@@ -113,7 +143,7 @@ static pl_object new_object(const int class, const int capacity)
 static void resize_object(pl_object x, const int capacity)
 {
     check_null_pointer(x);
-    check_missing_value(capacity);
+    check_na(capacity);
     pl_error_expect(capacity > 0 && capacity <= PL_OBJECT_MAX_CAPACITY,
                     PL_ERROR_INVALID_CAPACITY,
                     "Invalid capacity [%d]!",
@@ -122,13 +152,29 @@ static void resize_object(pl_object x, const int capacity)
     // Realloc memory block for the data.
     void *data_mem = realloc(x->data, pl_object_data_size(x->class, capacity));
     pl_error_expect(data_mem != NULL, PL_ERROR_ALLOC_FAILED, "`realloc()` fails!");
-    x->data = data_mem;
+    x->data     = data_mem;
     x->capacity = capacity;
 
     // Some data will be lost if the requested capacity is smaller than the current length.
     if (x->capacity < x->length)
         x->length = x->capacity;
 }
+
+static pl_unittest_summary test_resize_object(void)
+{
+    pl_unittest_summary summary = pl_unittest_new_summary();
+    pl_object x                 = new_object_without_recording(PL_CLASS_CHAR, 1);
+
+    pl_unittest_expect_error_is(summary, PL_ERROR_UNEXPECTED_NULL_POINTER, resize_object(NULL, 1));
+    pl_unittest_expect_error_is(summary, PL_ERROR_INVALID_NA, resize_object(x, PL_INT_NA));
+    pl_unittest_expect_error_is(summary, PL_ERROR_INVALID_CAPACITY, resize_object(x, PL_OBJECT_MAX_CAPACITY + 1));
+
+    pl_unittest_expect_no_error(summary, resize_object(x, 2));
+    pl_unittest_expect_true(summary, x->capacity == 2);
+
+    return summary;
+}
+
 
 /*-----------------------------------------------------------------------------
  |  Reserve memory for object
@@ -137,7 +183,7 @@ static void resize_object(pl_object x, const int capacity)
 static void reserve_object(pl_object x, const int capacity)
 {
     check_null_pointer(x);
-    check_missing_value(capacity);
+    check_na(capacity);
     pl_error_expect(capacity > 0 && capacity < PL_OBJECT_MAX_CAPACITY,
                     PL_ERROR_INVALID_CAPACITY,
                     "Invalid capacity [%d]!",
@@ -176,6 +222,16 @@ static void delete_object(pl_object x)
     free(x);
 }
 
+static pl_unittest_summary test_delete_object(void)
+{
+    pl_unittest_summary summary = pl_unittest_new_summary();
+
+    pl_unittest_expect_error_is(summary, PL_ERROR_UNEXPECTED_NULL_POINTER, delete_object(NULL));
+
+    return summary;
+}
+
+
 /*-----------------------------------------------------------------------------
  |  Table operation
  ----------------------------------------------------------------------------*/
@@ -189,6 +245,21 @@ static void init_table(pl_object *const table_p)
     // Allocate memory for the table if it is uninitialized.
     if (*table_p == NULL)
         *table_p = new_object_without_recording(PL_CLASS_LIST, 8);
+}
+
+static pl_unittest_summary test_init_table(void)
+{
+    pl_unittest_summary summary = pl_unittest_new_summary();
+
+    pl_object table = NULL;
+    pl_unittest_expect_no_error(summary, init_table(&table));
+    pl_unittest_expect_true(summary, table != NULL);
+    pl_unittest_expect_true(summary, table->class == PL_CLASS_LIST);
+    pl_unittest_expect_true(summary, table->capacity == 8);
+    free(table->data);
+    free(table);
+
+    return summary;
 }
 
 /*-----------------------------------------------------------------------------
@@ -222,6 +293,28 @@ static int table_find_object(pl_object table, pl_object x)
     }
 
     return -1;
+}
+
+static pl_unittest_summary test_table_find_object(void)
+{
+    pl_unittest_summary summary = pl_unittest_new_summary();
+
+    pl_object table = NULL;
+    init_table(&table);
+    pl_unittest_expect_true(summary, table_find_object(table, NULL) == -1);
+
+    pl_object x           = &((pl_object_struct){0});
+    pl_object y           = &((pl_object_struct){0});
+    pl_object *data_array = table->data;
+    data_array[0]         = x < y ? x : y;
+    data_array[1]         = x < y ? y : x;
+    table->length         = 2;
+    pl_unittest_expect_true(summary, table_find_object(table, x) == x < y ? 0 : 1);
+    pl_unittest_expect_true(summary, table_find_object(table, y) == x < y ? 1 : 0);
+    free(table->data);
+    free(table);
+
+    return summary;
 }
 
 /*-----------------------------------------------------------------------------
@@ -280,6 +373,33 @@ static void table_record_object(pl_object table, pl_object x)
     }
 }
 
+static pl_unittest_summary test_table_record_object(void)
+{
+    pl_unittest_summary summary = pl_unittest_new_summary();
+
+    pl_object table = NULL;
+    init_table(&table);
+
+    pl_object x = &(pl_object_struct){0};
+    pl_object y = &(pl_object_struct){0};
+    pl_object z = &(pl_object_struct){0};
+    table_record_object(table, x);
+    pl_unittest_expect_true(summary, table_find_object(table, x) != -1);
+    table_record_object(table, y);
+    pl_unittest_expect_true(summary, table_find_object(table, y) != -1);
+    table_record_object(table, z);
+    pl_unittest_expect_true(summary, table_find_object(table, x) != -1);
+
+    pl_unittest_expect_error_is(summary, PL_ERROR_UNEXPECTED_NULL_POINTER, table_record_object(table, NULL));
+
+    pl_unittest_expect_true(summary, table->length == 3);
+    table_record_object(table, x);
+    pl_unittest_expect_true(summary, table->length == 3);
+    free(table->data);
+    free(table);
+    return summary;
+}
+
 /*-----------------------------------------------------------------------------
  |  Untrack object
  ----------------------------------------------------------------------------*/
@@ -309,6 +429,35 @@ static void table_untrack_object(pl_object table, pl_object x)
             pl_object_data_size(PL_CLASS_LIST, table->length - index - 1));
     table->length--;
 }
+
+
+static pl_unittest_summary test_table_untrack_object(void)
+{
+    pl_unittest_summary summary = pl_unittest_new_summary();
+
+    pl_object table = NULL;
+    init_table(&table);
+
+    pl_object x = &(pl_object_struct){0};
+    pl_object y = &(pl_object_struct){0};
+    pl_object z = &(pl_object_struct){0};
+    table_record_object(table, x);
+    table_record_object(table, y);
+    table_record_object(table, z);
+
+    pl_unittest_expect_error_is(summary, PL_ERROR_UNEXPECTED_NULL_POINTER, table_untrack_object(table, NULL));
+    table_untrack_object(table, x);
+    pl_unittest_expect_true(summary, table->length == 2);
+    table_untrack_object(table, y);
+    pl_unittest_expect_true(summary, table->length == 1);
+    table_untrack_object(table, z);
+    pl_unittest_expect_true(summary, table->length == 0);
+
+    free(table->data);
+    free(table);
+    return summary;
+}
+
 
 /*-----------------------------------------------------------------------------
  |  Directly reachable
@@ -492,9 +641,6 @@ static void update_reachable(void)
     }
 }
 
-
-#include <malloc/malloc.h>
-
 static void garbage_collect(void)
 {
     // Init all the tables.
@@ -521,6 +667,43 @@ static void garbage_collect(void)
 
     // Resize the global table to save some space.
     resize_object(global_table, global_table->length == 0 ? 1 : global_table->length);
+}
+
+/*-----------------------------------------------------------------------------
+ |  Garbage collect scheduler
+ ----------------------------------------------------------------------------*/
+
+static void garbage_collect_check(void)
+{
+#if PL_GC_STRATEGY == PL_GC_STRATEGY_COUNTER
+    static int counter = 0;
+    counter            = counter + 1;
+    if (counter > PL_GC_STRATEGY_COUNTER_MAX)
+    {
+        counter = 0;
+        garbage_collect();
+    }
+#elif PL_GC_STRATEGY == PL_GC_STRATEGY_TIME
+    static int first_time = 1;
+    static time_t last_gc_time;
+
+    if (first_time)
+    {
+        garbage_collect();
+        last_gc_time = time(NULL);
+        first_time   = 0;
+    }
+    else
+    {
+        const time_t current_time    = time(NULL);
+        const double time_difference = difftime(current_time, last_gc_time);
+        if (time_difference > PL_GC_STRATEGY_TIME_MAX)
+        {
+            garbage_collect();
+            last_gc_time = time(NULL);
+        }
+    }
+#endif
 }
 
 /*-----------------------------------------------------------------------------
@@ -605,6 +788,23 @@ static int check_status(void)
  |  Get garbage collector namespace
  ----------------------------------------------------------------------------*/
 
+static void test(void)
+{
+#ifdef PL_TEST
+    printf("In file: %s\n", __FILE__);
+    pl_unittest_print_summary(test_new_object_without_recording());
+    pl_unittest_print_summary(test_resize_object());
+    pl_unittest_print_summary(test_delete_object());
+    pl_unittest_print_summary(test_init_table());
+    pl_unittest_print_summary(test_table_find_object());
+    pl_unittest_print_summary(test_table_record_object());
+    pl_unittest_print_summary(test_table_untrack_object());
+#else
+    puts("Test mode is disabled!");
+#endif//PL_TEST
+}
+
+
 pl_gc_ns pl_gc_get_ns(void)
 {
     static const pl_gc_ns gc_ns = {.new_object                    = new_object,
@@ -615,8 +815,10 @@ pl_gc_ns pl_gc_get_ns(void)
                                    .directly_unreachable          = directly_unreachable,
                                    .multiple_directly_unreachable = multiple_directly_unreachable,
                                    .garbage_collect               = garbage_collect,
+                                   .garbage_collect_check         = garbage_collect_check,
                                    .report                        = report,
                                    .kill                          = kill,
-                                   .check_status                  = check_status};
+                                   .check_status                  = check_status,
+                                   .test = test};
     return gc_ns;
 }
