@@ -113,16 +113,20 @@ static inline void pl_unittest_print_summary(pl_unittest_summary summary)
     printf("\t<%s>: %d/%d tests passed.\n", summary.name, summary.success, summary.total);
     if (summary.success != summary.total)
     {
-        printf("\t\tTest ");
-        pl_misc_for_i(summary.total - 1)
+        printf("\t\tX Test ");
+        int count = summary.total - summary.success;
+        pl_misc_for_i(summary.total)
         {
             if (summary.success_bool[i] != 1)
-                printf("%d, ", i);
+            {
+                count = count - 1;
+                if (count > 0)
+                    printf("%d, ", i + 1);
+                if (count == 0)
+                    printf("%d", i + 1);
+            }
         }
-        if (summary.total > 0)
-            if (summary.success_bool[summary.total - 1] != 1)
-                printf("%d ", summary.total - 1);
-        printf("failed!\n");
+        printf("\n");
     }
 }
 
